@@ -6,31 +6,45 @@ has to be delivered in a standard, cross-platform format.
 
 ## Project
 
-Name:
+Name: TheAlgorithms/Python
 
-URL:
+URL: [Link to Github repo](https://github.com/TheAlgorithms/Python)
 
-One or two sentences describing it
+The project implements many different algorithms in Python from various categories of algorithms. Some examples of included categories are graphs, boolean algebra and arithmetic analysis.
 
 ## Onboarding experience
 
 Did it build and run as documented?
-    
+
 See the assignment for details; if everything works out of the box,
 there is no need to write much here. If the first project(s) you picked
 ended up being unsuitable, you can describe the "onboarding experience"
 for each project, along with reason(s) why you changed to a different one.
 
-
 ## Complexity
 
-1. What are your results for ten complex functions?
-   * Did all methods (tools vs. manual count) get the same result?
-   * Are the results clear?
-2. Are the functions just complex, or also long?
-3. What is the purpose of the functions?
-4. Are exceptions taken into account in the given measurements?
-5. Is the documentation clear w.r.t. all the possible outcomes?
+1. **What are your results for eight complex functions?**
+
+The eight functions are presented in the table below. Every function has a CCN of 8 or higher with the Lizard tool, which is considered high complexity according to [this source](https://www.brandonsavage.net/code-complexity-and-clean-code/).
+
+| Function                                                            | Location                         | CCN, Lizard | CCN, manual (Student 1) | CCN, manual (Student 2) | NLOC, Lizard |
+| ------------------------------------------------------------------- | -------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
+| Dijkstra(graph, V, src)                                             | graphs/dijkstra_2.py             | 8           | -                       | -                       | 15           |
+| random_graph(int vertices_number, float probability, bool directed) | graphs/random_graph_generator.py | 8           | -                       | -                       | 29           |
+| interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | CCN3        | -                       | -                       | NLOC3        |
+| cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | -                       | -                       | 35           |
+| Function5                                                           | Location5                        | CCN5        | CCN5man1                | CCN5man2                | NLOC5        |
+| Function6                                                           | Location6                        | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
+| Function7                                                           | Location7                        | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
+| Function8                                                           | Location8                        | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
+
+- **Did all methods (tools vs. manual count) get the same result?**
+- **Are the results clear?**
+
+2. **Are the functions just complex, or also long?**
+3. **What is the purpose of the functions?**
+4. **Are exceptions taken into account in the given measurements?**
+5. **Is the documentation clear w.r.t. all the possible outcomes?**
 
 ## Refactoring
 
