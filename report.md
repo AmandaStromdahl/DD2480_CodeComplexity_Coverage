@@ -32,8 +32,8 @@ The eight functions are presented in the table below. Every function has a CCN o
 | Dijkstra(graph, V, src)                                             | graphs/dijkstra_2.py             | 8           | -                       | -                       | 15           |
 | random_graph(int vertices_number, float probability, bool directed) | graphs/random_graph_generator.py | 8           | -                       | -                       | 29           |
 | interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | 10        | 6                       | -                       | 30        |
-| cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | -                       | -                       | 35           |
-| Function5                                                           | Location5                        | CCN5        | CCN5man1                | CCN5man2                | NLOC5        |
+| cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | 10                       | -                       | 35           |
+| spiral_print(matrix)                                                           | matrix/spiral_print.py                        | 12        | 10                | -                | NLOC5        |
 | Function6                                                           | Location6                        | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
 | Function7                                                           | Location7                        | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
 | Function8                                                           | Location8                        | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
@@ -46,11 +46,20 @@ The eight functions are presented in the table below. Every function has a CCN o
 4. **Are exceptions taken into account in the given measurements?**
 5. **Is the documentation clear w.r.t. all the possible outcomes?**
 
-### Interpolation Search (interpolation_search.py)
+### <a id="interpolationSearch"></a>Interpolation Search ([file](complex_functions/interpolation_search.py))
 This method aims to find the index of a value in a sorted list, or `None` if the value is not in the list. The documentation of the method is very clear about the parameters and the return values.<br>
-The `lizard` tool gives this method a complexity (CCN) of 10. However, while computing it manually, we were surprised to obtain a complexity of 6 (9 decisions - 5 exits + 2) ! After few hours of researching where does this difference come from, we realized that `lizard` does not make any difference between a *normal* statement and a `return` statement. Hence, the difference of 4 level of complexity was coming from 4 `return` statements that `lizard` has considered as *normal* statements.<br>
+The `lizard` tool gives this method a complexity (CCN) of 10. However, while computing it manually, we were surprised to obtain a complexity of 6 (9 decisions - 5 exits + 2) ! The detailed calculation of the manual CCN can be found in [this file](complex_functions/interpolation_search.py). After few hours of researching where does this difference come from, we realized that `lizard` does not make any difference between a *normal* statement and a `return` statement. Hence, the difference of 4 levels of complexity was coming from 4 `return` statements that `lizard` has considered as *normal* statements.<br>
 Concerning the length of the function, it is not so long (30 LOC). Moreover, the number of exit points tends to reduce the complexity of the function, as we saw in the last paragraph.<br>
-The detailed calculation of the manual CCN can be found in [this file](interpolation_search.py).
+
+### Cycle Sort ([file](complex_functions/cycle_sort.py))
+This method aims to sort a given list using an in-place but unstable sorting algorithm. There is no documentation about the method but we easily guess that the single final output is the sorted list.<br>
+The `lizard` tool gives this method a complexity (CCN) of 10. We obtained exactly the same result when computing it manually (9 decisions - 1 exit + 2). The detailed calculation of the manual CCN can be found in [this file](complex_functions/cycle_sort.py).<br>
+The method is quite short (21 LOC). The complexity comes from how the algorithm needs to be implemented, i.e. it needs 9 decision points.
+
+### Spiral Print ([file](complex_functions/spiral_print.py))
+This method is used to make a spiral print of a given squared matrix. The documentation just explain what the method does and what are the conditions for the input matrix. There is no explanation about the output of the code. However, we deduce that there is no `return` values since the purpose of the method is just to make a spiral print of a matrix.<br>
+The `lizard` tool gives this method a complexity (CCN) of 12. However, with the manual analysis, we obtained a complexity of 10. We've exactly the same situation as for the [interpolation search](#interpolationSearch), i.e. `lizard` does not make the difference between *normal* statements and 'return' statements. Hence the difference of 2 levels of complexity comes from the 2 `return` statements (we do not count the final `return`) that `lizard` considers as *normal* statements.<br>
+This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
 ## Refactoring
 

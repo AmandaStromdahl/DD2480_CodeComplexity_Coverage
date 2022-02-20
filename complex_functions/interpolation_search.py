@@ -26,25 +26,24 @@ def interpolation_search(sorted_collection, item):
             sorted_collection[right] - sorted_collection[left]
         )
         # out of range check
-        # decision 4
+        # decisions 4 and 5
         if point < 0 or point >= len(sorted_collection):
             # exit 3
             return None
         current_item = sorted_collection[point]
-        # decision 5
+        # decision 6
         if current_item == item:
             # exit 4
             return point
         else:
-            # decision 6
+            # decision 7
             if point < left:
                 right = left
                 left = point
-            # decision 7
+            # decision 8
             elif point > right:
                 left = right
                 right = point
-            # decision 8
             else:
                 # decision 9
                 if item < current_item:
