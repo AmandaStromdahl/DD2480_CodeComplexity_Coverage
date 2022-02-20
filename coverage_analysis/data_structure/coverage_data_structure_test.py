@@ -1,33 +1,33 @@
 import pytest
-from coverage_data_structure import coverageData
+from .coverage_data_structure import CoverageData
 import random
 
 # the constructor should raise an error when the number of branches in <= 0
 def test_0_branch():
     with pytest.raises(ValueError):
-        coverage = coverageData(0)
+        coverage = CoverageData(0)
 
 # the access sequence and data should be "empty" when no log is done
 def test_no_log():
-    coverage = coverageData(1)
+    coverage = CoverageData(1)
     assert coverage.get_access_sequence() == []
     assert coverage.get_data() == {}
 
 # the log_branch method should raise an error when the id is bigger than the number of branches
 def test_wrong_id():
-    coverage = coverageData(1)
+    coverage = CoverageData(1)
     with pytest.raises(IndexError):
         coverage.log_branch("branch", 2)
 
 # the log_branch method should raise an error when the type is invalid
 def test_wrong_type():
-    coverage = coverageData(1)
+    coverage = CoverageData(1)
     with pytest.raises(NameError):
         coverage.log_branch("invalid_type", 1)
 
 # test that the first log of a branch is correctly initialized and correctly log
 def test_first_log():
-    coverage = coverageData(1)
+    coverage = CoverageData(1)
     coverage.log_branch("branch", 1)
     assert coverage.get_access_sequence() == [1]
     assert coverage.get_data() == {1: {"type" : "branch", "total": 1}}
@@ -35,7 +35,7 @@ def test_first_log():
 # test that random multiple logs works
 def test_multiple_logs():
     nb = random.randint(1, 10)
-    coverage = coverageData(nb)
+    coverage = CoverageData(nb)
     access_sequence = []
     data = {}
     nb_logs = random.randint(1, 100)

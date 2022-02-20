@@ -1,6 +1,6 @@
-from coverage_data_structure import coverageData
+from .coverage_data_structure import CoverageData
 
-class Coverage:
+class Coverage_test:
 
     def __init__(self, nb_run, function, inputs, nb_branches):
         if nb_run <= 0:
@@ -18,7 +18,7 @@ class Coverage:
 
     def run(self):
         for i in range(self.nb_run):
-            coverage = coverageData(self.nb_branches)
+            coverage = CoverageData(self.nb_branches)
             self.function(self.inputs[i], coverage)
             data = coverage.get_data()
             self.data_results.append(data)

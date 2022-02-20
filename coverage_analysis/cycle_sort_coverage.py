@@ -1,12 +1,10 @@
 from numpy import random
-import sys
-sys.path.append("../")
-from coverage_data_structure import coverageData
-from coverage import Coverage
+from data_structure.coverage_data_structure import CoverageData
+from data_structure.coverage_test import Coverage_test
 
 # This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
-def cycle_sort(array: list, coverage: coverageData) -> list:
+def cycle_sort(array: list, coverage: CoverageData) -> list:
     coverage.log_branch("branch", 1)
     array_len = len(array)
     for cycle_start in range(0, array_len - 1):
@@ -54,6 +52,6 @@ if __name__ == "__main__":
     inputs = []
     for i in range(nb_run):
         inputs.append(random.randint(100, size=(list_size)).tolist())
-    coverage = Coverage(nb_run, cycle_sort, inputs, 16)
+    coverage = Coverage_test(nb_run, cycle_sort, inputs, 16)
     coverage.run()
     coverage.print_results()

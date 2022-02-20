@@ -1,7 +1,7 @@
 BRANCH = "branch"
 EXIT = "exit"
 
-class coverageData:
+class CoverageData:
 
     def __init__(self, nb):
         if nb <= 0:

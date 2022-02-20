@@ -1,10 +1,8 @@
 from numpy import random
 from random import randint
 from collections.abc import Iterable
-import sys
-sys.path.append("../")
-from coverage_data_structure import coverageData
-from coverage import Coverage
+from data_structure.coverage_data_structure import CoverageData
+from data_structure.coverage_test import Coverage_test
 
 # This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
@@ -24,7 +22,7 @@ def check_matrix(matrix):
         result = False
     return result
 
-def spiralPrint(a, coverage: coverageData):
+def spiralPrint(a, coverage: CoverageData):
     if check_matrix(a) and len(a) > 0:
         coverage.log_branch("branch", 1)
         matRow = len(a)
@@ -80,6 +78,6 @@ if __name__ == "__main__":
         for i in range(matrix_size):
             matrix.append(random.randint(100, size=(matrix_size)).tolist())
         inputs.append(matrix)
-    coverage = Coverage(nb_run, spiralPrint, inputs, 19)
+    coverage = Coverage_test(nb_run, spiralPrint, inputs, 19)
     coverage.run()
     coverage.print_results()
