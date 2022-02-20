@@ -31,7 +31,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | ------------------------------------------------------------------- | -------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
 | Dijkstra(graph, V, src)                                             | graphs/dijkstra_2.py             | 8           | -                       | -                       | 15           |
 | random_graph(int vertices_number, float probability, bool directed) | graphs/random_graph_generator.py | 8           | -                       | -                       | 29           |
-| interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | CCN3        | -                       | -                       | NLOC3        |
+| interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | 10        | 6                       | -                       | 30        |
 | cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | -                       | -                       | 35           |
 | Function5                                                           | Location5                        | CCN5        | CCN5man1                | CCN5man2                | NLOC5        |
 | Function6                                                           | Location6                        | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
@@ -45,6 +45,12 @@ The eight functions are presented in the table below. Every function has a CCN o
 3. **What is the purpose of the functions?**
 4. **Are exceptions taken into account in the given measurements?**
 5. **Is the documentation clear w.r.t. all the possible outcomes?**
+
+### Interpolation Search (interpolation_search.py)
+This method aims to find the index of a value in a sorted list, or `None` if the value is not in the list. The documentation of the method is very clear about the parameters and the return values.<br>
+The `lizard` tool gives this method a complexity (CCN) of 10. However, while computing it manually, we were surprised to obtain a complexity of 6 (9 decisions - 5 exits + 2) ! After few hours of researching where does this difference come from, we realized that `lizard` does not make any difference between a *normal* statement and a `return` statement. Hence, the difference of 4 level of complexity was coming from 4 `return` statements that `lizard` has considered as *normal* statements.<br>
+Concerning the length of the function, it is not so long (30 LOC). Moreover, the number of exit points tends to reduce the complexity of the function, as we saw in the last paragraph.<br>
+The detailed calculation of the manual CCN can be found in [this file](interpolation_search.py).
 
 ## Refactoring
 
