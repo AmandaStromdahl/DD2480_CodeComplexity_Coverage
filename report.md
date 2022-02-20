@@ -29,11 +29,11 @@ The eight functions are presented in the table below. Every function has a CCN o
 
 | Function                                                            | Location                         | CCN, Lizard | CCN, manual (Student 1) | CCN, manual (Student 2) | NLOC, Lizard |
 | ------------------------------------------------------------------- | -------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
-| Dijkstra(graph, V, src)                                             | graphs/dijkstra_2.py             | 8           | -                       | -                       | 15           |
+| dj_oracle(case, num_qubits)                                         | 9                                | 9           | -                       | 25                      |
 | random_graph(int vertices_number, float probability, bool directed) | graphs/random_graph_generator.py | 8           | -                       | -                       | 29           |
-| interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | 10        | 6                       | -                       | 30        |
-| cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | 10                       | -                       | 35           |
-| spiral_print(matrix)                                                           | matrix/spiral_print.py                        | 12        | 10                | -                | NLOC5        |
+| interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | 10          | 6                       | -                       | 30           |
+| cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | 10                      | -                       | 35           |
+| spiral_print(matrix)                                                | matrix/spiral_print.py           | 12          | 10                      | -                       | NLOC5        |
 | Function6                                                           | Location6                        | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
 | Function7                                                           | Location7                        | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
 | Function8                                                           | Location8                        | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
@@ -41,24 +41,35 @@ The eight functions are presented in the table below. Every function has a CCN o
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
 
-2. **Are the functions just complex, or also long?**
-3. **What is the purpose of the functions?**
-4. **Are exceptions taken into account in the given measurements?**
-5. **Is the documentation clear w.r.t. all the possible outcomes?**
+1. **Are the functions just complex, or also long?**
+2. **What is the purpose of the functions?**
+3. **Are exceptions taken into account in the given measurements?**
+4. **Is the documentation clear w.r.t. all the possible outcomes?**
+
+### <a id="dj_oracle"></a>Deutsch Jozsa ([file](quantum/deutsch_jozsa.py))
+
+The Deutsch-Jozsa problem features an oracle function that takes an n-bit input and outputs 0 or 1. The function is either constant (returns a constant value) or balanced (meaning it returns 0 half of the time and 1 the rest of the time). The purpose of the examined method is to create a Quantum Cirtcuit (a model) of an oracle function which is either balanced or constant depending on the parameter `case`, and that handles `num_qubits`-bit input values.
+
+The function handles multiple cases and needs to iterate through `num_qubits` when setting the output values for the model. At the same time, the only way to exit the function is to return the model. This is why the cyclomatic complexity is so high. The documentation is clear about the only possible outcome of the function.
+
+Compared to the high cyclomatic complexity, the function has relatively few lines (only 25 according to Lizard). This is because the branches are quite dense and there is only one `return` statement. Lizard's cyclomatic complexity also aligns with the manual complexity. This is not surprising since the function is relatively straightforward in terms of complexity; there are no exceptions or logical `&&` or `||`.
 
 ### <a id="interpolationSearch"></a>Interpolation Search ([file](complex_functions/interpolation_search.py))
+
 This method aims to find the index of a value in a sorted list, or `None` if the value is not in the list. The documentation of the method is very clear about the parameters and the return values.<br>
-The `lizard` tool gives this method a complexity (CCN) of 10. However, while computing it manually, we were surprised to obtain a complexity of 6 (9 decisions - 5 exits + 2) ! The detailed calculation of the manual CCN can be found in [this file](complex_functions/interpolation_search.py). After few hours of researching where does this difference come from, we realized that `lizard` does not make any difference between a *normal* statement and a `return` statement. Hence, the difference of 4 levels of complexity was coming from 4 `return` statements that `lizard` has considered as *normal* statements.<br>
+The `lizard` tool gives this method a complexity (CCN) of 10. However, while computing it manually, we were surprised to obtain a complexity of 6 (9 decisions - 5 exits + 2) ! The detailed calculation of the manual CCN can be found in [this file](complex_functions/interpolation_search.py). After few hours of researching where does this difference come from, we realized that `lizard` does not make any difference between a _normal_ statement and a `return` statement. Hence, the difference of 4 levels of complexity was coming from 4 `return` statements that `lizard` has considered as _normal_ statements.<br>
 Concerning the length of the function, it is not so long (30 LOC). Moreover, the number of exit points tends to reduce the complexity of the function, as we saw in the last paragraph.<br>
 
 ### Cycle Sort ([file](complex_functions/cycle_sort.py))
+
 This method aims to sort a given list using an in-place but unstable sorting algorithm. There is no documentation about the method but we easily guess that the single final output is the sorted list.<br>
 The `lizard` tool gives this method a complexity (CCN) of 10. We obtained exactly the same result when computing it manually (9 decisions - 1 exit + 2). The detailed calculation of the manual CCN can be found in [this file](complex_functions/cycle_sort.py).<br>
 The method is quite short (21 LOC). The complexity comes from how the algorithm needs to be implemented, i.e. it needs 9 decision points.
 
 ### Spiral Print ([file](complex_functions/spiral_print.py))
+
 This method is used to make a spiral print of a given squared matrix. The documentation just explain what the method does and what are the conditions for the input matrix. There is no explanation about the output of the code. However, we deduce that there is no `return` values since the purpose of the method is just to make a spiral print of a matrix.<br>
-The `lizard` tool gives this method a complexity (CCN) of 12. However, with the manual analysis, we obtained a complexity of 10. We've exactly the same situation as for the [interpolation search](#interpolationSearch), i.e. `lizard` does not make the difference between *normal* statements and 'return' statements. Hence the difference of 2 levels of complexity comes from the 2 `return` statements (we do not count the final `return`) that `lizard` considers as *normal* statements.<br>
+The `lizard` tool gives this method a complexity (CCN) of 12. However, with the manual analysis, we obtained a complexity of 10. We've exactly the same situation as for the [interpolation search](#interpolationSearch), i.e. `lizard` does not make the difference between _normal_ statements and 'return' statements. Hence the difference of 2 levels of complexity comes from the 2 `return` statements (we do not count the final `return`) that `lizard` considers as _normal_ statements.<br>
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
 ## Refactoring
