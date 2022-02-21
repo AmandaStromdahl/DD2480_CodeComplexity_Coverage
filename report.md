@@ -38,6 +38,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | Function7                                     | Location7                                            | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
 | Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
 
+
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
 
@@ -48,11 +49,11 @@ The eight functions are presented in the table below. Every function has a CCN o
 
 ### <a id="dj_oracle"></a>Deutsch Jozsa ([file](quantum/deutsch_jozsa.py))
 
-The Deutsch-Jozsa problem features an oracle function that takes an n-bit input and outputs 0 or 1. The function is either constant (returns a constant value) or balanced (meaning it returns 0 half of the time and 1 the rest of the time). The purpose of the examined method is to create a Quantum Cirtcuit (a model) of an oracle function which is either balanced or constant depending on the parameter `case`, and that handles `num_qubits`-bit input values.
+The Deutsch-Jozsa problem features an oracle function that takes an n-bit input and outputs 0 or 1. The function is either constant (returns a constant value) or balanced (meaning it returns 0 half of the time and 1 the rest of the time). The purpose of the examined method is to create a Quantum Circuit (a model) of an oracle function which is either balanced or constant depending on the parameter `case`, and that handles `num_qubits`-bit input values.
 
-The function handles multiple cases and needs to iterate through `num_qubits` when setting the output values for the model. At the same time, the only way to exit the function is to return the model. This is why the cyclomatic complexity is so high. The documentation is clear about the only possible outcome of the function.
+The function handles multiple cases and needs to iterate through `num_qubits` when setting the output values for the model. At the same time, the only way to exit the function is to return the model. This is why the cyclomatic complexity is so high. The documentation is clear about the only possible outcome of the function, which is to return the model. There are no exceptions or alternative return values.
 
-Compared to the high cyclomatic complexity, the function has relatively few lines (only 25 according to Lizard). This is because the branches are quite dense and there is only one `return` statement. Lizard's cyclomatic complexity also aligns with the manual complexity. This is not surprising since the function is relatively straightforward in terms of complexity; there are no exceptions or logical `&&` or `||`.
+Compared to the high cyclomatic complexity, the function has relatively few lines (only 25 according to Lizard). This is because the branches are quite dense and there is only one `return` statement. Lizard's cyclomatic complexity also aligns with both of the manual complexity calculations. This is not surprising since the function is relatively straightforward in terms of complexity; there are no exceptions or logical `&&` or `||`.
 
 ### <a id="strassen"></a>Strassen ([file](complex_functions/strassen.py))
 

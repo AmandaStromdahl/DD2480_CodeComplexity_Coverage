@@ -1,6 +1,7 @@
 import numpy as np
 import qiskit as q
 
+# This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
 def dj_oracle(case: str, num_qubits: int) -> q.QuantumCircuit:
     """
