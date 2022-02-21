@@ -27,16 +27,17 @@ for each project, along with reason(s) why you changed to a different one.
 
 The eight functions are presented in the table below. Every function has a CCN of 8 or higher with the Lizard tool, which is considered high complexity according to [this source](https://www.brandonsavage.net/code-complexity-and-clean-code/).
 
-| Function                                                            | Location                         | CCN, Lizard | CCN, manual (Student 1) | CCN, manual (Student 2) | NLOC, Lizard |
-| ------------------------------------------------------------------- | -------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
-| dj_oracle(case, num_qubits)                                         | 9                                | 9           | 9                       | 25                      |
-| random_graph(int vertices_number, float probability, bool directed) | graphs/random_graph_generator.py | 8           | -                       | -                       | 29           |
-| interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | 10          | 6                       | -                       | 30           |
-| cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | 10                      | -                       | 35           |
-| spiral_print(matrix)                                                | matrix/spiral_print.py           | 12          | 10                      | -                       | NLOC5        |
-| Function6                                                           | Location6                        | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
-| Function7                                                           | Location7                        | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
-| Function8                                                           | Location8                        | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
+| Function                                      | Location                                             | CCN, Lizard | CCN, manual (Student 1) | CCN, manual (Student 2) | NLOC, Lizard |
+| --------------------------------------------- | ---------------------------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
+| dj_oracle(case, num_qubits)                   | quantum/deutsch_jozsa.py                             | 9           | 9                       | 9                       | 25           |
+| strassen(matrix1, matrix2)                    | divide_and_conquer/strassen_matrix_multiplication.py | 12          | 10                      | 10                      | 39           |
+| interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | -                       | 30           |
+| cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | -                       | 35           |
+| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | -                       | NLOC5        |
+| Function6                                     | Location6                                            | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
+| Function7                                     | Location7                                            | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
+| Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
+
 
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
@@ -53,6 +54,16 @@ The Deutsch-Jozsa problem features an oracle function that takes an n-bit input 
 The function handles multiple cases and needs to iterate through `num_qubits` when setting the output values for the model. At the same time, the only way to exit the function is to return the model. This is why the cyclomatic complexity is so high. The documentation is clear about the only possible outcome of the function, which is to return the model. There are no exceptions or alternative return values.
 
 Compared to the high cyclomatic complexity, the function has relatively few lines (only 25 according to Lizard). This is because the branches are quite dense and there is only one `return` statement. Lizard's cyclomatic complexity also aligns with both of the manual complexity calculations. This is not surprising since the function is relatively straightforward in terms of complexity; there are no exceptions or logical `&&` or `||`.
+
+### <a id="strassen"></a>Strassen ([file](complex_functions/strassen.py))
+
+The purpose of this method is to perform a matrix multiplication of two given matrices using the Strassen algorithm. This task requires checking that the dimensions of the matrices are compatible and using nested loops to iterate through the values in the matrices. That, in turn, causes a high complexity.
+
+Lizard's complexity evaluation differs from the manual evaluations by 2 (both manual evaluations yielded the same results). Part of the reason for this could be that Lizard does not consider exceptions to be exits. If exceptions are included in the calculations as exit points, the function is deemed less complex.
+
+The number of code lines is relatively small compared to the high complexity. This is because the function is quite dense in terms of nested loops and if-statements.
+
+There is very little documentation describing the function. The exception and the last `return` statement are self-explanatory, but the first `return` statement requires some description.
 
 ### <a id="interpolationSearch"></a>Interpolation Search ([file](complex_functions/interpolation_search.py))
 
