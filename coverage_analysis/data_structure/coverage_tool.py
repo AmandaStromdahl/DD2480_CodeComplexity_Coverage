@@ -5,8 +5,7 @@ class Coverage_tool:
     '''
     Constructor of the tool
     :param nb_run: number of times the function will be run
-    :param function: the function to test
-    :param inputs: specific inputs for all the runs
+    :param tests: the tests to run
     :param nb_branches: total number of branches in the given function
     '''
     def __init__(self, tests, nb_branches):
