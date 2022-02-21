@@ -29,7 +29,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 
 | Function                                                            | Location                         | CCN, Lizard | CCN, manual (Student 1) | CCN, manual (Student 2) | NLOC, Lizard |
 | ------------------------------------------------------------------- | -------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
-| dj_oracle(case, num_qubits)                                         | 9                                | 9           | -                       | 25                      |
+| dj_oracle(case, num_qubits)                                         | 9                                | 9           | 9                       | 25                      |
 | random_graph(int vertices_number, float probability, bool directed) | graphs/random_graph_generator.py | 8           | -                       | -                       | 29           |
 | interpolation_search(sorted_collection, item)                       | searches/interpolation_search.py | 10          | 6                       | -                       | 30           |
 | cycle_sort(list)                                                    | sorts/cycle_sort.py              | 10          | 10                      | -                       | 35           |
@@ -48,11 +48,11 @@ The eight functions are presented in the table below. Every function has a CCN o
 
 ### <a id="dj_oracle"></a>Deutsch Jozsa ([file](quantum/deutsch_jozsa.py))
 
-The Deutsch-Jozsa problem features an oracle function that takes an n-bit input and outputs 0 or 1. The function is either constant (returns a constant value) or balanced (meaning it returns 0 half of the time and 1 the rest of the time). The purpose of the examined method is to create a Quantum Cirtcuit (a model) of an oracle function which is either balanced or constant depending on the parameter `case`, and that handles `num_qubits`-bit input values.
+The Deutsch-Jozsa problem features an oracle function that takes an n-bit input and outputs 0 or 1. The function is either constant (returns a constant value) or balanced (meaning it returns 0 half of the time and 1 the rest of the time). The purpose of the examined method is to create a Quantum Circuit (a model) of an oracle function which is either balanced or constant depending on the parameter `case`, and that handles `num_qubits`-bit input values.
 
-The function handles multiple cases and needs to iterate through `num_qubits` when setting the output values for the model. At the same time, the only way to exit the function is to return the model. This is why the cyclomatic complexity is so high. The documentation is clear about the only possible outcome of the function.
+The function handles multiple cases and needs to iterate through `num_qubits` when setting the output values for the model. At the same time, the only way to exit the function is to return the model. This is why the cyclomatic complexity is so high. The documentation is clear about the only possible outcome of the function, which is to return the model. There are no exceptions or alternative return values.
 
-Compared to the high cyclomatic complexity, the function has relatively few lines (only 25 according to Lizard). This is because the branches are quite dense and there is only one `return` statement. Lizard's cyclomatic complexity also aligns with the manual complexity. This is not surprising since the function is relatively straightforward in terms of complexity; there are no exceptions or logical `&&` or `||`.
+Compared to the high cyclomatic complexity, the function has relatively few lines (only 25 according to Lizard). This is because the branches are quite dense and there is only one `return` statement. Lizard's cyclomatic complexity also aligns with both of the manual complexity calculations. This is not surprising since the function is relatively straightforward in terms of complexity; there are no exceptions or logical `&&` or `||`.
 
 ### <a id="interpolationSearch"></a>Interpolation Search ([file](complex_functions/interpolation_search.py))
 
