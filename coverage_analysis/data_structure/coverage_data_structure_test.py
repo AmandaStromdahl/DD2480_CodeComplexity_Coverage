@@ -5,7 +5,7 @@ import random
 # the constructor should raise an error when the number of branches in <= 0
 def test_0_branch():
     with pytest.raises(ValueError):
-        coverage = CoverageData(0)
+        CoverageData(0)
 
 # the access sequence and data should be "empty" when no log is done
 def test_no_log():

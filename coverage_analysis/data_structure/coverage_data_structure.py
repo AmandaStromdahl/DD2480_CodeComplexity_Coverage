@@ -3,6 +3,10 @@ EXIT = "exit"
 
 class CoverageData:
 
+    '''
+    Constructor of the data structure
+    :param nb: number of branches
+    '''
     def __init__(self, nb):
         if nb <= 0:
             raise ValueError("The number of branches has to be > 0")
@@ -10,6 +14,11 @@ class CoverageData:
         self.data = {}
         self.number_of_branches = nb
 
+    '''
+    This method logs a given branch
+    :param type: the type of the branch, BRANCH or EXIT
+    :param id: the id of the branch
+    '''
     def log_branch(self, type, id):
         if id > self.number_of_branches:
             raise IndexError("The given id is bigger than the number of branches")
@@ -23,6 +32,9 @@ class CoverageData:
         else:
             self.data[id]["total"] = self.data[id]["total"] + 1
 
+    '''
+    This method prints the results in the terminal
+    '''
     def print_results(self):
         print("--------------------------------------------------")
         print("ACCESS SEQUENCE")
@@ -44,8 +56,16 @@ class CoverageData:
             else:
                 print("?\t" + str(id) + ":\t0\taccesses")
 
+    '''
+    Getter for the access sequence
+    :return: the access sequence
+    '''
     def get_access_sequence(self):
         return self.access_sequence
 
+    '''
+    Getter for the data
+    :return: the data
+    '''
     def get_data(self):
         return self.data

@@ -1,6 +1,7 @@
 from numpy import random
+from random import randint
 from data_structure.coverage_data_structure import CoverageData
-from data_structure.coverage_test import Coverage_test
+from data_structure.coverage_tool import Coverage_tool
 
 # This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
@@ -48,10 +49,17 @@ def cycle_sort(array: list, coverage: CoverageData) -> list:
 
 if __name__ == "__main__":
     nb_run = 10
-    list_size = 100
     inputs = []
     for i in range(nb_run):
+        list_size = randint(1, 100)
         inputs.append(random.randint(100, size=(list_size)).tolist())
-    coverage = Coverage_test(nb_run, cycle_sort, inputs, 16)
+    coverage = Coverage_tool(nb_run, cycle_sort, inputs, 16)
     coverage.run()
     coverage.print_results()
+
+    # Example of unique run to get more detail on the access sequence
+    # coverageData = CoverageData(16)
+    # list = random.randint(100, size=(randint(1, 10))).tolist()
+    # print(list)
+    # cycle_sort(list, coverageData)
+    # coverageData.print_results()

@@ -2,7 +2,7 @@ from numpy import random
 from random import randint
 from collections.abc import Iterable
 from data_structure.coverage_data_structure import CoverageData
-from data_structure.coverage_test import Coverage_test
+from data_structure.coverage_tool import Coverage_tool
 
 # This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
@@ -78,6 +78,16 @@ if __name__ == "__main__":
         for i in range(matrix_size):
             matrix.append(random.randint(100, size=(matrix_size)).tolist())
         inputs.append(matrix)
-    coverage = Coverage_test(nb_run, spiralPrint, inputs, 19)
+    coverage = Coverage_tool(nb_run, spiralPrint, inputs, 19)
     coverage.run()
     coverage.print_results()
+
+    # Example of unique run to get more detail on the access sequence
+    # coverageData = CoverageData(19)
+    # matrix_size = randint(1, 10)
+    # matrix = []
+    # for i in range(matrix_size):
+    #     matrix.append(random.randint(100, size=(matrix_size)).tolist())
+    # print(matrix)
+    # spiralPrint(matrix, coverageData)
+    # coverageData.print_results()
