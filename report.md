@@ -38,7 +38,6 @@ The eight functions are presented in the table below. Every function has a CCN o
 | Function7                                     | Location7                                            | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
 | Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
 
-
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
 
@@ -84,6 +83,14 @@ The `lizard` tool gives this method a complexity (CCN) of 12. However, with the 
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
 ## Refactoring
+
+### <a id="strassen_refactored"></a>Strassen ([file](refactored_functions/strassen.py))
+
+Parts of the strassen() function could be moved to helper functions to reduce complexity. E.g. there is a code snippet of nested loops and if-statements in which `matrix1` and `matrix2` are extended with zeroes. If this were to be moved to a helper function H(), H() could return an extended version of each matrix. Because there are two matrices that need to be extended with zeroes, H() would need to be called twice from strassen().
+
+Depending on how this type of refactoring is executed, the matrices would not necessarily share the same loop. This could affect the efficiency negatively, but at the same time the cyclomatic complexity would be reduced and the program would be more easily understood by another programmer.
+
+The refactoring was carried out in [this file](refactored_functions/strassen.py) and the cyclomatic complexity was reduced from 12 to 7 according to Lizard.
 
 Plan for refactoring complex code:
 
