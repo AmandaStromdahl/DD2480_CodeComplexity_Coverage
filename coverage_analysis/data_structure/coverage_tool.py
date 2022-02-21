@@ -47,6 +47,8 @@ class Coverage_tool:
         if self.data_results == []:
             print("You need to run the tool before!")
             return
+        # used to compute the branch coverage percentage
+        nb_unreached_branches = 0
         # print headers
         print("TOTAL ACCESSES")
         print("\t\t", end="")
@@ -75,4 +77,10 @@ class Coverage_tool:
                     print("0", end="\t")
             # print mean accesses
             print(self.accesses_sum[id - 1] / self.nb_run)
+            if self.accesses_sum[id - 1] == 0:
+                nb_unreached_branches = nb_unreached_branches + 1
+        # print percentage coverage
+        perc = 1 - (nb_unreached_branches / self.nb_branches)
+        print("\nBranch coverage: %0.2f" % (perc * 100), end="")
+        print("%")
             
