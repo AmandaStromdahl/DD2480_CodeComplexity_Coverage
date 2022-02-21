@@ -30,7 +30,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | Function                                      | Location                                             | CCN, Lizard | CCN, manual (Student 1) | CCN, manual (Student 2) | NLOC, Lizard |
 | --------------------------------------------- | ---------------------------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
 | dj_oracle(case, num_qubits)                   | 9                                                    | 9           | -                       | 25                      |
-| strassen(matrix1, matrix2)                    | divide_and_conquer/strassen_matrix_multiplication.py | 12          | 10                      | -                       | 39           |
+| strassen(matrix1, matrix2)                    | divide_and_conquer/strassen_matrix_multiplication.py | 12          | 10                      | 10                      | 39           |
 | interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | -                       | 30           |
 | cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | -                       | 35           |
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | -                       | NLOC5        |
@@ -58,7 +58,7 @@ Compared to the high cyclomatic complexity, the function has relatively few line
 
 The purpose of this method is to perform a matrix multiplication of two given matrices using the Strassen algorithm. This task requires checking that the dimensions of the matrices are compatible and using nested loops to iterate through the values in the matrices. That, in turn, causes a high complexity.
 
-Lizard's complexity evaluation differs from the manual evaluation by 2. Part of the reason for this could be that Lizard does not consider exceptions to be exits. If exceptions are included in the calculations as exit points, the function is deemed less complex.
+Lizard's complexity evaluation differs from the manual evaluations by 2 (both manual evaluations yielded the same results). Part of the reason for this could be that Lizard does not consider exceptions to be exits. If exceptions are included in the calculations as exit points, the function is deemed less complex.
 
 The number of code lines is relatively small compared to the high complexity. This is because the function is quite dense in terms of nested loops and if-statements.
 
