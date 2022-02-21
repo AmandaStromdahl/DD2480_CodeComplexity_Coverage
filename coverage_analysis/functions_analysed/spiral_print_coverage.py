@@ -29,8 +29,6 @@ def spiralPrint(a, coverage: CoverageData):
     if check_matrix(a) and len(a) > 0:
         coverage.log_branch("branch", 1)
         matRow = len(a)
-        print(a)
-        print(a[0])
         if isinstance(a[0], Iterable):
             coverage.log_branch("branch", 2)
             matCol = len(a[0])

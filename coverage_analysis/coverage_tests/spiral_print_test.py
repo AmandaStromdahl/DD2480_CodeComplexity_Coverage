@@ -22,6 +22,9 @@ def test_wrong_matrix_2(coverage: CoverageData):
 def test_no_error(coverage: CoverageData):
     matrix = ([1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12])
     spiralPrintTest(matrix, coverage)
+    f = open('spiralPrint.txt', 'r')
+    assert f.read() == "1\n2\n3\n4\n8\n12\n11\n10\n9\n5\n6\n7\n"
+    f.close()
 
 if __name__ == "__main__":
     tests = [test_wrong_matrix_1, test_no_error]
