@@ -14,12 +14,24 @@ The project implements many different algorithms in Python from various categori
 
 ## Onboarding experience
 
-Did it build and run as documented?
+1. How easily can you build the project? Briefly describe if everything worked as documented or not:\
+**(a).** Did you have to install a lot of additional tools to build the software?\
+In order to utilize most of the functions presented in the library all that was needed was the python programming language. No specialized software was need to use the functions. This is primarily due to the fact that each function is a stand alone function that doesn't depend on large sections of other code and thus did not need a large build system to work. However, some algorithms are dependent on certain standard packages for machine learning and statistics. In total the entire library has 19 dependencies listed.
 
-See the assignment for details; if everything works out of the box,
-there is no need to write much here. If the first project(s) you picked
-ended up being unsuitable, you can describe the "onboarding experience"
-for each project, along with reason(s) why you changed to a different one.
+**(b).** Were those tools well documented?\
+No large degree of documentation is needed for the project as a whole. The different algorithms however are indivudally documented with a short summary of their purpose and links to further reading. There was a substantial amount of documentation for contributors, specifying everything from coding style to how to write tests.
+
+**(c).** Were other components installed automatically by the build script?\
+There is no build script.
+
+**(d).** Did the build conclude automatically without errors?\
+See above.
+
+**(e).** How well do examples and tests run on your system(s)?\
+I've tried several algorithms and they seem to be working without issue. -Insert information about tests here-
+
+2. Do you plan to continue or choose another project?
+No.
 
 ## Complexity
 
