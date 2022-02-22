@@ -1,7 +1,10 @@
-from numpy import random
-from random import randint
+import sys
+sys.path.append('../')
 from data_structure.coverage_data_structure import CoverageData
-from data_structure.coverage_tool import Coverage_tool
+# these imports are used for demonstration purpose
+# from numpy import random
+# from random import randint
+# from data_structure.coverage_tool import Coverage_tool
 
 # This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
@@ -47,19 +50,12 @@ def cycle_sort(array: list, coverage: CoverageData) -> list:
     coverage.log_branch("exit", 16)
     return array
 
-if __name__ == "__main__":
-    nb_run = 10
-    inputs = []
-    for i in range(nb_run):
-        list_size = randint(1, 100)
-        inputs.append(random.randint(100, size=(list_size)).tolist())
-    coverage = Coverage_tool(nb_run, cycle_sort, inputs, 16)
-    coverage.run()
-    coverage.print_results()
+# The code below is kept in comments in case a demonstration is needed
 
-    # Example of unique run to get more detail on the access sequence
-    # coverageData = CoverageData(16)
-    # list = random.randint(100, size=(randint(1, 10))).tolist()
-    # print(list)
-    # cycle_sort(list, coverageData)
-    # coverageData.print_results()
+# if __name__ == "__main__":
+#     # Example of unique run to get more detail on the access sequence
+#     coverageData = CoverageData(16)
+#     list = random.randint(100, size=(randint(1, 10))).tolist()
+#     print(list)
+#     cycle_sort(list, coverageData)
+#     coverageData.print_results()

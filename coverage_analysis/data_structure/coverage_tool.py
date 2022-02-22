@@ -5,18 +5,12 @@ class Coverage_tool:
     '''
     Constructor of the tool
     :param nb_run: number of times the function will be run
-    :param function: the function to test
-    :param inputs: specific inputs for all the runs
+    :param tests: the tests to run
     :param nb_branches: total number of branches in the given function
     '''
-    def __init__(self, nb_run, function, inputs, nb_branches):
-        if nb_run <= 0:
-            raise ValueError("The number of run has to be > 0")
-        self.nb_run = nb_run
-        if nb_run != len(inputs):
-            raise ValueError("The number of inputs does not match the number of run")
-        self.function = function
-        self.inputs = inputs
+    def __init__(self, tests, nb_branches):
+        self.nb_test = len(tests)
+        self.tests = tests
         if nb_branches <= 0:
             raise ValueError("The number of branches has to be > 0")
         self.nb_branches = nb_branches
@@ -28,10 +22,10 @@ class Coverage_tool:
     number of runs with their specific inputs
     '''
     def run(self):
-        for i in range(self.nb_run):
+        for i in range(self.nb_test):
             coverage = CoverageData(self.nb_branches)
-            # execute the function with its input
-            self.function(self.inputs[i], coverage)
+            # execute the test
+            self.tests[i](coverage)
             # retrieve the result
             data = coverage.get_data()
             self.data_results.append(data)
@@ -52,15 +46,15 @@ class Coverage_tool:
         # print headers
         print("TOTAL ACCESSES")
         print("\t\t", end="")
-        for i in range(self.nb_run):
-            print("run " + str(i + 1), end="\t") 
+        for test in self.tests:
+            print(test.__name__, end="\t") 
         print("mean")
         # iterate on the branches
         for id in range(1, self.nb_branches + 1):
             i = 0
             type = ""
             # this loop is needed since a specific branch might not be present in one or many branch
-            while i < self.nb_run and type == "":
+            while i < self.nb_test and type == "":
                 if id in self.data_results[i]:
                     type = self.data_results[i][id]["type"]
                 i = i + 1
@@ -70,13 +64,13 @@ class Coverage_tool:
             else:
                 print(type + "\t" + str(id) + ":\t", end="")
             # print results
-            for i in range(self.nb_run):     
+            for i in range(self.nb_test):     
                 if id in self.data_results[i]:
-                    print(str(self.data_results[i][id]["total"]), end="\t")
+                    print(str(self.data_results[i][id]["total"]), end="\t\t\t")
                 else:
-                    print("0", end="\t")
+                    print("0", end="\t\t\t")
             # print mean accesses
-            print(self.accesses_sum[id - 1] / self.nb_run)
+            print(self.accesses_sum[id - 1] / self.nb_test)
             if self.accesses_sum[id - 1] == 0:
                 nb_unreached_branches = nb_unreached_branches + 1
         # print percentage coverage
