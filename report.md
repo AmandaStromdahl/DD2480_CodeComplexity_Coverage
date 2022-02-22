@@ -46,7 +46,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 3. **Are exceptions taken into account in the given measurements?**
 4. **Is the documentation clear w.r.t. all the possible outcomes?**
 
-### <a id="dj_oracle"></a>Deutsch Jozsa ([file](quantum/deutsch_jozsa.py))
+### <a id="dj_oracle"></a>Deutsch Jozsa ([file](complex_functions/deutsch_jozsa.py))
 
 The Deutsch-Jozsa problem features an oracle function that takes an n-bit input and outputs 0 or 1. The function is either constant (returns a constant value) or balanced (meaning it returns 0 half of the time and 1 the rest of the time). The purpose of the examined method is to create a Quantum Circuit (a model) of an oracle function which is either balanced or constant depending on the parameter `case`, and that handles `num_qubits`-bit input values.
 
@@ -83,6 +83,14 @@ The `lizard` tool gives this method a complexity (CCN) of 12. However, with the 
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
 ## Refactoring
+
+### <a id="dj_oracle"></a>Deutsch Jozsa ([file](refactored_functions/deutsch_jozsa.py))
+
+A simple way to reduce the cyclomatic complexity of dj_oracle() is to move a complex block of code into a helper function. Seeing as dj_oracle() handles two cases (constant and balanced) and the latter of them is rather complex, this case can be moved to a separate function `H()`. `H()` would be called once from dj_oracle() and would return a Quantum Circuit (a model) of the balanced oracle function.
+
+A possible drawback is that the code might become less readable, as it would require the programmer to jump between functions when analysing the code.
+
+The refactoring was carried out in [this file](refactored_functions/deutsch_jozsa.py) and the cyclomatic complexity was reduced from 9 to 4 according to Lizard.
 
 ### <a id="strassen_refactored"></a>Strassen ([file](refactored_functions/strassen.py))
 
