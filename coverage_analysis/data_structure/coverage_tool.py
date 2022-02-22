@@ -1,3 +1,4 @@
+import math
 from .coverage_data_structure import CoverageData
 
 class Coverage_tool:
@@ -16,6 +17,7 @@ class Coverage_tool:
         self.nb_branches = nb_branches
         self.data_results = []
         self.accesses_sum = [0] * self.nb_branches
+        self.tabs = []
 
     '''
     This method runs the coverage tool, i.e it will execute the function for the given
@@ -32,7 +34,7 @@ class Coverage_tool:
             # add results in accesses_sum in order to compute an average at the end
             for id in data:
                 self.accesses_sum[id - 1] = self.accesses_sum[id - 1] + data[id]["total"]
-    
+
     '''
     This method prints the results in the terminal
     '''
@@ -47,7 +49,12 @@ class Coverage_tool:
         print("TOTAL ACCESSES")
         print("\t\t", end="")
         for test in self.tests:
-            print(test.__name__, end="\t") 
+            print(test.__name__, end="\t")
+            nb_tabs = math.ceil(len(test.__name__) / 8)
+            if len(test.__name__) % 8 == 0:
+                nb_tabs = nb_tabs + 1
+            self.tabs.append(nb_tabs)
+            
         print("mean")
         # iterate on the branches
         for id in range(1, self.nb_branches + 1):
@@ -66,9 +73,11 @@ class Coverage_tool:
             # print results
             for i in range(self.nb_test):     
                 if id in self.data_results[i]:
-                    print(str(self.data_results[i][id]["total"]), end="\t\t\t")
+                    print(str(self.data_results[i][id]["total"]), end="")
+                    print("\t" * (self.tabs[i] - (len(str(self.data_results[i][id]["total"])) // 8)), end="")
                 else:
-                    print("0", end="\t\t\t")
+                    print("0", end="")
+                    print("\t" * self.tabs[i], end="")
             # print mean accesses
             print(self.accesses_sum[id - 1] / self.nb_test)
             if self.accesses_sum[id - 1] == 0:
