@@ -1,3 +1,5 @@
+import sys
+
 # This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 
 """
@@ -93,3 +95,13 @@ Manual CCN:
     3 exits
     CNN = 11 - 3 + 2 = 10
 """
+
+# this method is used to test the spiralPrint function
+def spiralPrintTest(a):
+    original_stdout = sys.stdout
+    f = open('spiralPrint.txt', 'w')
+    sys.stdout = f
+    spiralPrint(a)
+    sys.stdout = original_stdout
+    f.close()
+    return
