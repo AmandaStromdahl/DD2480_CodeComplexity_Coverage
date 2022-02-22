@@ -92,6 +92,14 @@ A possible drawback is that the code might become less readable, as it would req
 
 The refactoring was carried out in [this file](refactored_functions/deutsch_jozsa.py) and the cyclomatic complexity was reduced from 9 to 4 according to Lizard.
 
+### <a id="strassen_refactored"></a>Strassen ([file](refactored_functions/strassen.py))
+
+Parts of the strassen() function could be moved to helper functions to reduce complexity. Two examples of such parts are the appending of zeros to the matrices `matrix1` and `matrix2`, as well as the removal of additional zeros in `final_matrix`. These code snippets could be moved to helper functions `F()` and `H()`, which would require `F()` to be called twice and `H()` to be called once from strassen(). Both of these helper functions would return a modified matrix.
+
+Depending on how this type of refactoring is executed, `matrix1` and `matrix2` would not necessarily share the same loop in `F()`. This could affect the efficiency negatively, but at the same time the cyclomatic complexity would be reduced and the program would be easier to understand.
+
+The refactoring was carried out in [this file](refactored_functions/strassen.py) and the cyclomatic complexity was reduced from 12 to 4 according to Lizard.
+
 Plan for refactoring complex code:
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
