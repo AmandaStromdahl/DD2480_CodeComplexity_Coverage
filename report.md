@@ -86,11 +86,11 @@ This method is not so long (25 LOC). The complexity comes mainly from the fact t
 
 ### <a id="strassen_refactored"></a>Strassen ([file](refactored_functions/strassen.py))
 
-Parts of the strassen() function could be moved to helper functions to reduce complexity. E.g. there is a code snippet of nested loops and if-statements in which `matrix1` and `matrix2` are extended with zeroes. If this were to be moved to a helper function H(), H() could return an extended version of each matrix. Because there are two matrices that need to be extended with zeroes, H() would need to be called twice from strassen().
+Parts of the strassen() function could be moved to helper functions to reduce complexity. Two examples of such parts are the appending of zeros to the matrices `matrix1` and `matrix2`, as well as the removal of additional zeros in `final_matrix`. These code snippets could be moved to helper functions `F()` and `H()`, which would require `F()` to be called twice and `H()` to be called once from strassen(). Both of these helper functions would return a modified matrix.
 
-Depending on how this type of refactoring is executed, the matrices would not necessarily share the same loop. This could affect the efficiency negatively, but at the same time the cyclomatic complexity would be reduced and the program would be more easily understood by another programmer.
+Depending on how this type of refactoring is executed, `matrix1` and `matrix2` would not necessarily share the same loop in `F()`. This could affect the efficiency negatively, but at the same time the cyclomatic complexity would be reduced and the program would be easier to understand.
 
-The refactoring was carried out in [this file](refactored_functions/strassen.py) and the cyclomatic complexity was reduced from 12 to 7 according to Lizard.
+The refactoring was carried out in [this file](refactored_functions/strassen.py) and the cyclomatic complexity was reduced from 12 to 4 according to Lizard.
 
 Plan for refactoring complex code:
 
