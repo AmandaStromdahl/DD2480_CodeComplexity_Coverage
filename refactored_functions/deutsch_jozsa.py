@@ -105,26 +105,47 @@ def getBalancedOracle(oracle_qc: q.QuantumCircuit, num_qubits: int) -> q.Quantum
     # correspopnds to a qubit, if the digit is 0, we do nothing, if it's 1
     # we apply an X-gate to that qubit:
     
-    for index, bit in enumerate(b_str):
-        if bit == "1":
-            oracle_qc.x(index)
+    # ----------------------------------------------------------------
+    # REFACTORED: moved the placing of X gates into a helper function
+    # ----------------------------------------------------------------
+    oracle_qc = placeXgates(oracle_qc, b_str)  
+    # ----------------------------------------------------------------     
+
     # Do the controlled-NOT gates for each qubit, using the output qubit
     # as the target:
     
     for index in range(num_qubits):
         oracle_qc.cx(index, num_qubits)
-    # Next, place the final X-gates        
+    # Next, place the final X-gates 
+    
+    # ----------------------------------------------------------------
+    # REFACTORED: moved the placing of X gates into a helper function
+    # ----------------------------------------------------------------
+    oracle_qc = placeXgates(oracle_qc, b_str) 
+    # ----------------------------------------------------------------
+    
+    return oracle_qc
+# ----------------------------------------------------------------
+
+# ----------------------------------------------------------------
+# REFACTORED: moved code from getBalancedOracle() into this helper function
+# ----------------------------------------------------------------
+def placeXgates(oracle_qc: q.QuantumCircuit, b_str: str) -> q.QuantumCircuit:
     for index, bit in enumerate(b_str):
         if bit == "1":
             oracle_qc.x(index)
-    
     return oracle_qc
 # ----------------------------------------------------------------
 
     """
     Lizard CCN, original version of dj_oracle(): 9
     Lizard CCN, refactored version dj_oracle(): 4  => approx. 56% cyclomatic complexity reduction
+    (Lizard CCN, getBalancedOracle(): 2)
+    (Lizard CCN, placeXgates(): 3)
     
-    (Lizard CCN, getBalancedOracle(): 6)
+    Manual CCN, original version of dj_oracle(): 9
+    Manual CCN, refactored version dj_oracle(): 4  (3 decisions, 1 exit)
+    (Manual CCN, getBalancedOracle(): 2  (1 decision, 1 exit)) 
+    (Manual CCN, placeXgates(): 3  (2 decisions, 1 exits))
     """
 
