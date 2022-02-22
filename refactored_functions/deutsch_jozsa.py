@@ -93,7 +93,7 @@ def dj_oracle(case: str, num_qubits: int) -> q.QuantumCircuit:
     return oracle_gate
 
 # ----------------------------------------------------------------
-# REFACTORED: moved code from strassen() into this helper function
+# REFACTORED: moved code from dj_oracle() into this helper function
 # ----------------------------------------------------------------
 def getBalancedOracle(oracle_qc: q.QuantumCircuit, num_qubits: int) -> q.QuantumCircuit:
     # First generate a random number that tells us which CNOTs to
