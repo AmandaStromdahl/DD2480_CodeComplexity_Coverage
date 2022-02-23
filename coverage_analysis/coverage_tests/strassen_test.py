@@ -1,6 +1,3 @@
-from re import S
-from numpy import random
-from random import randint
 import sys
 sys.path.append('../')
 from data_structure.coverage_tool import Coverage_tool
