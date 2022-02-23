@@ -83,6 +83,9 @@ class SearchProblem:
         return f"x: {self.x} y: {self.y}"
 
 
+# NOTE: manual annotation of CNN labels: decision <number>, exit <number>
+
+
 def hill_climbing(
     search_prob,
     find_max: bool = True,
@@ -112,6 +115,7 @@ def hill_climbing(
     iterations = 0
     solution_found = False
     visited = set()
+    # decision 1, 2
     while not solution_found and iterations < max_iter:
         visited.add(current_state)
         iterations += 1
@@ -121,9 +125,12 @@ def hill_climbing(
         max_change = -math.inf
         min_change = math.inf
         next_state = None  # to hold the next best neighbor
+        # decision 3
         for neighbor in neighbors:
+            # decision 4
             if neighbor in visited:
                 continue  # do not want to visit the same state again
+            # decision 5,6,7,8
             if (
                 neighbor.x > max_x
                 or neighbor.x < min_x
@@ -132,16 +139,21 @@ def hill_climbing(
             ):
                 continue  # neighbor outside our bounds
             change = neighbor.score() - current_score
+            # decision 9
             if find_max:  # finding max
                 # going to direction with greatest ascent
+                # decision 10, 11
                 if change > max_change and change > 0:
                     max_change = change
                     next_state = neighbor
             else:  # finding min
+
                 # to direction with greatest descent
+                # decision 12, 13
                 if change < min_change and change < 0:
                     min_change = change
                     next_state = neighbor
+        # decision 14
         if next_state is not None:
             # we found at least one neighbor which improved the current state
             current_state = next_state
@@ -149,6 +161,7 @@ def hill_climbing(
             # since we have no neighbor that improves the solution we stop the search
             solution_found = True
 
+    # decision 15
     if visualization:
         from matplotlib import pyplot as plt
 
@@ -157,8 +170,11 @@ def hill_climbing(
         plt.ylabel("Function values")
         plt.show()
 
+    # exit 1
     return current_state
 
+
+# NOTE: CNN = 15 - 1 + 2 = 16
 
 if __name__ == "__main__":
     import doctest
@@ -166,7 +182,7 @@ if __name__ == "__main__":
     doctest.testmod()
 
     def test_f1(x, y):
-        return (x**2) + (y**2)
+        return (x ** 2) + (y ** 2)
 
     # starting the problem with initial coordinates (3, 4)
     prob = SearchProblem(x=3, y=4, step_size=1, function_to_optimize=test_f1)
@@ -187,7 +203,7 @@ if __name__ == "__main__":
     )
 
     def test_f2(x, y):
-        return (3 * x**2) - (6 * y)
+        return (3 * x ** 2) - (6 * y)
 
     prob = SearchProblem(x=3, y=4, step_size=1, function_to_optimize=test_f1)
     local_min = hill_climbing(prob, find_max=True)
