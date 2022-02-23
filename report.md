@@ -36,7 +36,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
 | Function6                                     | Location6                                            | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
-| next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | CCN8man2                | 38           |
+| next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
 
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
