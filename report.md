@@ -31,9 +31,9 @@ The eight functions are presented in the table below. Every function has a CCN o
 | --------------------------------------------- | ---------------------------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
 | dj_oracle(case, num_qubits)                   | quantum/deutsch_jozsa.py                             | 9           | 9                       | 9                       | 25           |
 | strassen(matrix1, matrix2)                    | divide_and_conquer/strassen_matrix_multiplication.py | 12          | 10                      | 10                      | 39           |
-| interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | -                       | 30           |
-| cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | -                       | 35           |
-| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | -                       | NLOC5        |
+| interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | 6                       | 30           |
+| cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | 10                       | 35           |
+| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                       | NLOC5        |
 | Function6                                     | Location6                                            | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
 | Function7                                     | Location7                                            | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
 | Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
