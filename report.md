@@ -280,21 +280,13 @@ its output?
 
 ## Coverage improvement
 
-Show the comments that describe the requirements for the coverage.
+None of the selected functions had any tests originally, which means their old coverage was 0%, (there were very few tests overall). This means every new test that we wrote increased the coverage without overlapping with any old test from the original project.
 
-Report of old coverage: [link]
-
-Report of new coverage: [link]
-
-Test cases added:
-
-git diff ...
-
-Number of test cases added: two per team member (P) or at least four (P+).
+Our tests can be found in [this folder](complex_functions/tests).
 
 ## Self-assessment: Way of working
 
-An account of our way of working and a reflection of our improvements can be found in [this file](essence.pdf).
+An account of our way of working and a reflection of our improvements can be found in [this file](Essence.pdf).
 
 The self-assessment was unanimous. We also agreed that a way to improve is to make sure to get started on the next assignment early, in order to avoid ending up in a time crunch.
 
