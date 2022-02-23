@@ -46,10 +46,10 @@ The eight functions are presented in the table below. Every function has a CCN o
 | interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | 6                       | 30           |
 | cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | 10                      | 35           |
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
-| simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 16                | 16                | 79        |
+| simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 16                      | 16                      | 79           |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
 | next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
-| hsv_to_rgb(conversions)                       | conversion/rgb_hsv_conversion.py                     | 17          | 14                      | -                      | 62           |
+| hsv_to_rgb(conversions)                       | conversion/rgb_hsv_conversion.py                     | 17          | 14                      | -                       | 62           |
 
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
@@ -96,6 +96,7 @@ The `lizard` tool gives this method a complexity (CCN) of 12. However, with the 
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
 ### HSV to RGB ([file](complex_functions/rgb_hsv_conversion.py))
+
 RGB and HSV are systems of numerically describing colour. The function hsv_to_rgb converts a colour described in the HSV format to the RGB format. Analysis with the tool Lizard gave this a CCN of 17. Manual counting gave it a complexity of 14. The function itself contains a very large if statement with different conditionals. It is worth noting that the different else if statements does not perform different calculations, it just reorders the result of the same calculations. Therefore a very simple way of reducing the complexity of this function is to compute the three values and then place them into a list where the value of the hue_section acts as a key. This would mean a reduction from the current NLOC of 62 by approximately 20-30 lines of code if we were to use a list comprehension.
 
 ### Simulated Annealing ([file](complex_functions/simulated_annealing.py))
@@ -242,12 +243,9 @@ else:
 
 This change brings down the CCN of `new_generation` to 4, approximately a 79% decrease from the original CCN of 19. Although the total CCN of all functions is 14 (6 + 4 + 4) we have managed to refactor this function into very digestible chunks. From a readability perspective it is also very improved, as you can easily spot the main steps at a glance. Although someone who reads this function would have to "jump around" a bit to understand every detail, but you have the opportunity to unravel the necessary details on demand instead of trying to understand everything at once.
 
-
-
-
 ### <a id="simulated_annealing"></a>Simulated Annealing ([file](refactored_functions/simulated_annealing.py))
 
-The simulated annealing function contains a lot of conditionals that drives up the cyclomatic complexity. Large chunks of conditionals can result in the code being more difficult to read. The most obvious way to decrease the complexity was to move some of the more obtuse conditional chains to separate helper functions. This should improve the readability of the code. 
+The simulated annealing function contains a lot of conditionals that drives up the cyclomatic complexity. Large chunks of conditionals can result in the code being more difficult to read. The most obvious way to decrease the complexity was to move some of the more obtuse conditional chains to separate helper functions. This should improve the readability of the code.
 
 The refactored version of the code can be found in [this file](refactored_functions/simulated_annealing.py). Lizard now rates the complexity as 10 and manual analysis gives a complexity of 10 (9+2-1). This corresponds to a complexity reduction of ~33%.
 
@@ -255,10 +253,9 @@ The refactored version of the code can be found in [this file](refactored_functi
 
 ### Tools
 
-Document your experience in using a "new"/different coverage tool.
+We used Coverage.py, which was the recommended tool for measuring coverage in Python. The documentation provided a sufficiently detailed description of how to install it with `pip` and which commands to use. Overall it worked relatively well and was easy to use with PyTest.
 
-How well was the tool documented? Was it possible/easy/difficult to
-integrate it with your build environment?
+Nevertheless, we did get some strange results for one of the examined functions. Even though there were no tests for that function, Coverage.py deemed the coverage to be non-zero. When taking a closer look at the tool's analysis, it turned out that Coverage.py had included function headers and import statements in the coverage. The only parts that weren't covered were the code contents of the functions.
 
 ### Your own coverage tool
 
