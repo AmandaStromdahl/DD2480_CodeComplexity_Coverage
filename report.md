@@ -100,13 +100,17 @@ Depending on how this type of refactoring is executed, `matrix1` and `matrix2` w
 
 The refactoring was carried out in [this file](refactored_functions/strassen.py) and the cyclomatic complexity was reduced from 12 to 4 according to Lizard.
 
-Plan for refactoring complex code:
+### <a id="cycleSort_refactored"></a>Cycle Sort ([file](refactored_functions/cycle_sort.py))
 
-Estimated impact of refactoring (lower CC, but other drawbacks?).
+The first thing to note in this method is that a lot of code snippets are repeated in the [original version](complex_functions/cycle_sort.py):
+- LOC 15-20 and 33-38: these lines can be moved into a new function called `find_pos()`. The purpose of this method is to find in which position to place the `item` value in the array;
+- LOC 27-30 and 41-44: these lines can also be moved into a new function called `place_item()`. Its purpose is to place the given `item` in the position found by the `find_pos()` function. Note that the while is here to place the `item` after possible duplicates if any.
 
-Carried out refactoring (optional, P+):
+Finally, we notice that the `while` statement line 32 is there to repeat to sequence of finding position for a given `item` (using `find_pos()`) and place it there (using `place_item()`). We can move this cycle into a new function called `do_cycle()` which will execute this procedure.
 
-git diff ...
+With all these changes, and according to `lizard`, we managed to reduce the cyclomatic complexity of `cycle_sort()` from 10 to 3 ! Which is a reduction of 70%. Detailed calculations can be found in [this file](refactored_functions/cycle_sort.py).
+
+One advantage of this refactoring is that, with the call of the new functions, the algorithm should be easier to understand. However, for someone who want to read the code, it would be a bit annoying to jump from function to function to read the whole code.
 
 ## Coverage
 
