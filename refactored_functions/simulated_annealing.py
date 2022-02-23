@@ -45,7 +45,7 @@ def simulated_annealing(
 
     while not search_end:
         current_score = current_state.score()
-        if best_state is None or current_score > best_state.score():
+        if isBestState(best_state, current_score):
             best_state = current_state
         scores.append(current_score)
         iterations += 1
@@ -58,27 +58,18 @@ def simulated_annealing(
             picked_neighbor = neighbors.pop(index)
             change = picked_neighbor.score() - current_score
 
-            if (
-                picked_neighbor.x > max_x
-                or picked_neighbor.x < min_x
-                or picked_neighbor.y > max_y
-                or picked_neighbor.y < min_y
-            ):
+            if (outOfBounds(picked_neighbor, max_x, min_x, max_y, min_y)):
                 continue  # neighbor outside our bounds
 
             if not find_max:
                 change = change * -1  # in case we are finding minimum
-            if change > 0:  # improves the solution
+
+            if(pickNeighbour(change, current_temp)):
                 next_state = picked_neighbor
-            else:
-                probability = (math.e) ** (
-                    change / current_temp
-                )  # probability generation function
-                if random.random() < probability:  # random number within probability
-                    next_state = picked_neighbor
+
         current_temp = current_temp - (current_temp * rate_of_decrease)
 
-        if current_temp < threshold_temp or next_state is None:
+        if endSearch(current_temp, threshold_temp, next_state):
             # temperature below threshold, or could not find a suitable neighbor
             search_end = True
         else:
@@ -94,9 +85,44 @@ def simulated_annealing(
     return best_state
 
 # This method checks if a picked neighbour is within the correct bounds.
-# Returns 
+# Returns true is the picked_neighbour is out of bounds.
 def outOfBounds(picked_neighbour, max_x, min_x, max_y, min_y):
-    return true
+    if (
+        picked_neighbour.x > max_x 
+        or picked_neighbour.x < min_x
+        or picked_neighbour.y > max_y
+        or picked_neighbour.y < min_y
+    ): 
+        return True
+    else:
+        return False
+
+# This method checks is the current state gives the best score.
+def isBestState(best_state, current_score):
+    if best_state is None or current_score > best_state.score():
+        return True
+    else:
+        return False
+
+# This method determines if we should pick a neighbour or not. 
+# This occurs if picking the node adds a positive change or if we generate a random number within the probability span capped by the temperature.
+def pickNeighbour(change, current_temp):
+    if change > 0:
+        return True
+    else:
+        probability = (math.e) ** ( change / current_temp)  # probability generation function
+        if random.random() < probability:  # random number within probability
+            return True
+    
+    return False
+
+# This method checks if we should end the search for the optima or not.
+def endSearch(current_temp, threshold_temp, next_state):
+    if current_temp < threshold_temp or next_state is None:
+        return True
+    else:
+        return False
+    
 
 if __name__ == "__main__":
 
