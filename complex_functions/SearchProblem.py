@@ -1,3 +1,4 @@
+# This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 class SearchProblem:
     """
     An interface to define search problems.

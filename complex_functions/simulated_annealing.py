@@ -1,3 +1,4 @@
+# This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 # https://en.wikipedia.org/wiki/Simulated_annealing
 import math
 import random

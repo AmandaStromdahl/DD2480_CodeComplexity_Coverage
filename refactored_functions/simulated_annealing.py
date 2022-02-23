@@ -1,4 +1,5 @@
-# https://en.wikipedia.org/wiki/Simulated_annealing
+# This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
+
 import math
 import random
 from typing import Any
