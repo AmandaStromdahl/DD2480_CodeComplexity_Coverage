@@ -34,7 +34,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | -                       | 30           |
 | cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | -                       | 35           |
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | -                       | NLOC5        |
-| simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 13                | CCN6man2                | 79        |
+| simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 15                | CCN6man2                | 79        |
 | Function7                                     | Location7                                            | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
 | Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
 
@@ -84,7 +84,7 @@ This method is not so long (25 LOC). The complexity comes mainly from the fact t
 
 ### Simulated Annealing ([file](complex_functions/simulated_annealing.py))
 
-Describe the method like above.
+The simulated annealing method aims to find a global optimum for a given function. It avoid getting stuck in local optima by having a "temperature" variable that controls the degree of randomness that impacts the choices of the algorithm. The function has a high measured complexity by Lizard (CCN = 16) but is not overly long as it consists of 79 lines. Manual counting of the complexity gives a complexity of 15 (14+2-1). The majority of the complexity in this function comes from the fact that the simulated annealing algorithm demands a certain degree of complexity, but also slightly from the coding style.
 
 ## Refactoring
 
@@ -111,6 +111,12 @@ Estimated impact of refactoring (lower CC, but other drawbacks?).
 Carried out refactoring (optional, P+):
 
 git diff ...
+
+### <a id="simulated_annealing"></a>Simulated Annealing ([file](refactored_functions/simulated_annealing.py))
+
+The simulated annealing function contains a lot of conditionals that drives up the cyclomatic complexity. Large chunks of conditionals can result in the code being more difficult to read. The most obvious way to decrease the complexity was to move some of the more obtuse conditional chains to separate helper functions. This should improve the readability of the code. 
+
+The refactored version of the code can be found in [this file](refactored_functions/simulated_annealing.py). Lizard now rates the complexity as 10 and manual analysis gives a complexity of 10 (9+2-1). This corresponds to a complexity reduction of ~33%.
 
 ## Coverage
 
