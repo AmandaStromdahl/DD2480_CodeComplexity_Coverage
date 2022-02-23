@@ -49,6 +49,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 16                | 16                | 79        |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
 | next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
+| hsv_to_rgb(conversions)                       | conversion/rgb_hsv_conversion.py                     | 17          | 14                      | -                      | 62           |
 
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
@@ -93,6 +94,9 @@ The method is quite short (21 LOC). The complexity comes from how the algorithm 
 This method is used to make a spiral print of a given squared matrix. The documentation just explain what the method does and what are the conditions for the input matrix. There is no explanation about the output of the code. However, we deduce that there is no `return` values since the purpose of the method is just to make a spiral print of a matrix.<br>
 The `lizard` tool gives this method a complexity (CCN) of 12. However, with the manual analysis, we obtained a complexity of 10. We've exactly the same situation as for the [interpolation search](#interpolationSearch), i.e. `lizard` does not make the difference between _normal_ statements and 'return' statements. Hence the difference of 2 levels of complexity comes from the 2 `return` statements (we do not count the final `return`) that `lizard` considers as _normal_ statements.<br>
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
+
+### HSV to RGB ([file](complex_functions/rgb_hsv_conversion.py))
+RGB and HSV are systems of numerically describing colour. The function hsv_to_rgb converts a colour described in the HSV format to the RGB format. Analysis with the tool Lizard gave this a CCN of 17. Manual counting gave it a complexity of 14. The function itself contains a very large if statement with different conditionals. It is worth noting that the different else if statements does not perform different calculations, it just reorders the result of the same calculations. Therefore a very simple way of reducing the complexity of this function is to compute the three values and then place them into a list where the value of the hue_section acts as a key. This would mean a reduction from the current NLOC of 62 by approximately 20-30 lines of code if we were to use a list comprehension.
 
 ### Simulated Annealing ([file](complex_functions/simulated_annealing.py))
 
