@@ -46,7 +46,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | 6                       | 30           |
 | cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | 10                      | 35           |
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
-| Function6                                     | Location6                                            | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
+| simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 16                | 16                | 79        |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
 | next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
 
@@ -93,6 +93,10 @@ The method is quite short (21 LOC). The complexity comes from how the algorithm 
 This method is used to make a spiral print of a given squared matrix. The documentation just explain what the method does and what are the conditions for the input matrix. There is no explanation about the output of the code. However, we deduce that there is no `return` values since the purpose of the method is just to make a spiral print of a matrix.<br>
 The `lizard` tool gives this method a complexity (CCN) of 12. However, with the manual analysis, we obtained a complexity of 10. We've exactly the same situation as for the [interpolation search](#interpolationSearch), i.e. `lizard` does not make the difference between _normal_ statements and 'return' statements. Hence the difference of 2 levels of complexity comes from the 2 `return` statements (we do not count the final `return`) that `lizard` considers as _normal_ statements.<br>
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
+
+### Simulated Annealing ([file](complex_functions/simulated_annealing.py))
+
+The simulated annealing method aims to find a global optimum for a given function. It avoid getting stuck in local optima by having a "temperature" variable that controls the degree of randomness that impacts the choices of the algorithm. The function has a high measured complexity by Lizard (CCN = 16) but is not overly long as it consists of 79 lines. Manual counting of the complexity gives a complexity of 16. The majority of the complexity in this function comes from the fact that the simulated annealing algorithm demands a certain degree of complexity, but also slightly from the coding style.
 
 ### Hill Climber ([file](complex_functions/hill_climber.py))
 
@@ -233,6 +237,15 @@ else:
 ```
 
 This change brings down the CCN of `new_generation` to 4, approximately a 79% decrease from the original CCN of 19. Although the total CCN of all functions is 14 (6 + 4 + 4) we have managed to refactor this function into very digestible chunks. From a readability perspective it is also very improved, as you can easily spot the main steps at a glance. Although someone who reads this function would have to "jump around" a bit to understand every detail, but you have the opportunity to unravel the necessary details on demand instead of trying to understand everything at once.
+
+
+
+
+### <a id="simulated_annealing"></a>Simulated Annealing ([file](refactored_functions/simulated_annealing.py))
+
+The simulated annealing function contains a lot of conditionals that drives up the cyclomatic complexity. Large chunks of conditionals can result in the code being more difficult to read. The most obvious way to decrease the complexity was to move some of the more obtuse conditional chains to separate helper functions. This should improve the readability of the code. 
+
+The refactored version of the code can be found in [this file](refactored_functions/simulated_annealing.py). Lizard now rates the complexity as 10 and manual analysis gives a complexity of 10 (9+2-1). This corresponds to a complexity reduction of ~33%.
 
 ## Coverage
 
