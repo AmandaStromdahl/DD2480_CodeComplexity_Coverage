@@ -249,6 +249,10 @@ The simulated annealing function contains a lot of conditionals that drives up t
 
 The refactored version of the code can be found in [this file](refactored_functions/simulated_annealing.py). Lizard now rates the complexity as 10 and manual analysis gives a complexity of 10 (9+2-1). This corresponds to a complexity reduction of ~33%.
 
+### <a id="hsv_rgb_conversion"></a>Simulated Annealing ([file](refactored_functions/rgb_hsv_conversion.py))
+
+This function was refactored according to the refactoring plan detailed above. The CCN decresed from 17 to 8 according to Lizard. This is a reduction of the CCN of ~52%. The NLOC decreased from 62 to 50. This could probably be further improved by using list comprehensions. The essence of the refactoring was the usage of an indexable list instead of a large if-statement.
+
 ## Coverage
 
 ### Tools
