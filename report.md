@@ -15,8 +15,8 @@ The project implements many different algorithms in Python from various categori
 ## Onboarding experience
 
 1. How easily can you build the project? Briefly describe if everything worked as documented or not:\
-**(a).** Did you have to install a lot of additional tools to build the software?\
-In order to utilize most of the functions presented in the library all that was needed was the python programming language. No specialized software was need to use the functions. This is primarily due to the fact that each function is a stand alone function that doesn't depend on large sections of other code and thus did not need a large build system to work. However, some algorithms are dependent on certain standard packages for machine learning and statistics. In total the entire library has 19 dependencies listed.
+   **(a).** Did you have to install a lot of additional tools to build the software?\
+   In order to utilize most of the functions presented in the library all that was needed was the python programming language. No specialized software was need to use the functions. This is primarily due to the fact that each function is a stand alone function that doesn't depend on large sections of other code and thus did not need a large build system to work. However, some algorithms are dependent on certain standard packages for machine learning and statistics. In total the entire library has 19 dependencies listed.
 
 **(b).** Were those tools well documented?\
 No large degree of documentation is needed for the project as a whole. The different algorithms however are indivudally documented with a short summary of their purpose and links to further reading. There was a substantial amount of documentation for contributors, specifying everything from coding style to how to write tests.
@@ -31,7 +31,7 @@ See above.
 I've tried several algorithms and they seem to be working without issue. The project uses pytest for its testkit. This was not well described in the original repository but quite apparent given some of the top-level files in the repository. For a newcomer who has never used pytest before this could prove to be somewhat of a hinderance.
 
 2. Do you plan to continue or choose another project?
-We are planning to continue with this project as it is suitable for complexity analysis and refactoring.
+   We are planning to continue with this project as it is suitable for complexity analysis and refactoring.
 
 ## Complexity
 
@@ -95,18 +95,18 @@ The `lizard` tool gives this method a complexity (CCN) of 12. However, with the 
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
 ### Hill Climber ([file](complex_functions/hill_climber.py))
+
 This function implements the **Hill Climber** heuristic for optimization of search problems. The documentation explains the general idea of the algorithm that it is implementing, that is that we start in a state in the search tree and move to neighboring states that provide maximum or minimum change. The documentation (which is the function docstring) also details the input parameters to the function. There are total 8 input parameters which of 7 are optional (in the table above the only required parameter is listed for brevity). As the algorithm is essentially a simulation there are a bunch of "knobs" that can be tweaked, like the bounds and depth of the simulation. The function makes use of a general interface for search problems implemented as a class called `SearchProblem`. The function takes in an instance of `SearchProblem` which is a representation of the initial state, and returns an instance of `SearchProblem` as a representation of the final state.
 
 Despite being a relatively simple algorithmic idea, the implementation is quite complex with regard to CNN. The reason for the high complexity (16) is the high density of `if` statements, which are needed both for error handling (checking bounds for instance), applying logic specified by the optional parameters (plotting the results for instance) and the main logic of checking values of states. The reason for identical `lizard` and manual scores is the fact that there is a single `return` statement of the function, so the difference of modeling cyclomatic complexity does not matter.
 
 ### Conway's Game of Life ([file](complex_functions/conways_game_of_life.py))
-The function we are interested in is called `new_generation` and it performs a single iteration of **Conway's Game of Life**, which is an implementation of a **cellular automata**. It is a simulation that is only influenced by its initial value which is run of a grid of cells that can either be **on** or **off**. I each iteration, the state of every cell is updated simultaneously in accordance to a set of rules. 
 
-The documentation is quite sparse, it only covers the overall purpose of the function, that it generates a new generation of *Conway's Game of Life* along with a simple usage example. The single parameter is not documented, but described well by the type-annotation and its name. There is also a recounting of the rules of *Conways's Game of Life* later in the code as a comment.
+The function we are interested in is called `new_generation` and it performs a single iteration of **Conway's Game of Life**, which is an implementation of a **cellular automata**. It is a simulation that is only influenced by its initial value which is run of a grid of cells that can either be **on** or **off**. I each iteration, the state of every cell is updated simultaneously in accordance to a set of rules.
+
+The documentation is quite sparse, it only covers the overall purpose of the function, that it generates a new generation of _Conway's Game of Life_ along with a simple usage example. The single parameter is not documented, but described well by the type-annotation and its name. There is also a recounting of the rules of _Conways's Game of Life_ later in the code as a comment.
 
 Once again the complexity is high (19) due to many `if` statements. The main source of cyclomatic complexity is the need for checking the boundaries of the grid, which has to be done for 8 distinct cells for each cell in the grid. The `lizard` tool and out own manual calculations of the CNN are identical as there is only one exit point of the function so the difference of modelling cyclomatic complexity does not matter.
-
-
 
 ## Refactoring
 
@@ -129,6 +129,7 @@ The refactoring was carried out in [this file](refactored_functions/strassen.py)
 ### <a id="cycleSort_refactored"></a>Cycle Sort ([file](refactored_functions/cycle_sort.py))
 
 The first thing to note in this method is that a lot of code snippets are repeated in the [original version](complex_functions/cycle_sort.py):
+
 - LOC 15-20 and 33-38: these lines can be moved into a new function called `find_pos()`. The purpose of this method is to find in which position to place the `item` value in the array;
 - LOC 27-30 and 41-44: these lines can also be moved into a new function called `place_item()`. Its purpose is to place the given `item` in the position found by the `find_pos()` function. Note that the while is here to place the `item` after possible duplicates if any.
 
@@ -138,9 +139,7 @@ With all these changes, and according to `lizard`, we managed to reduce the cycl
 
 One advantage of this refactoring is that, with the call of the new functions, the algorithm should be easier to understand. However, for someone who want to read the code, it would be a bit annoying to jump from function to function to read the whole code.
 
-
 ### Conway's Game of Life ([file](refactored_functions/conways_game_of_life.py))
-
 
 The function we are refactoring is `new_generation`. We start of by identify the areas we can improve upon. The outer two `for` loops cannot really be avoided. However, the following code snippet that counts the active neighbours can be improved upon.
 
@@ -191,6 +190,7 @@ def active_neighbours(cells, x, y):
         neighbour_count += cells[y + dy][x + dx]
     return neighbour_count
 ```
+
 > Note: variables `i` and `j` have been renamed to `y` and `x`.
 
 This change brings the down the CCN of `active_neighbours` from 13 to 6, which is a good improvement, and the solution is much more elegant.
@@ -218,7 +218,7 @@ A good idea in this scenario is to extract the condition in the `if` statement o
 ```python
 def cell_should_be_on(alive, neighbour_count):
     return (alive and 2 <= neighbour_count <= 3) or not alive and neighbour_count == 3
-    
+
 
 def new_generation(cells):
 
@@ -233,8 +233,6 @@ else:
 ```
 
 This change brings down the CCN of `new_generation` to 4, approximately a 79% decrease from the original CCN of 19. Although the total CCN of all functions is 14 (6 + 4 + 4) we have managed to refactor this function into very digestible chunks. From a readability perspective it is also very improved, as you can easily spot the main steps at a glance. Although someone who reads this function would have to "jump around" a bit to understand every detail, but you have the opportunity to unravel the necessary details on demand instead of trying to understand everything at once.
-
-
 
 ## Coverage
 
@@ -282,13 +280,9 @@ Number of test cases added: two per team member (P) or at least four (P+).
 
 ## Self-assessment: Way of working
 
-Current state according to the Essence standard: ...
+An account of our way of working and a reflection of our improvements can be found in [this file](essence.pdf).
 
-Was the self-assessment unanimous? Any doubts about certain items?
-
-How have you improved so far?
-
-Where is potential for improvement?
+The self-assessment was unanimous. We also agreed that a way to improve is to make sure to get started on the next assignment early, in order to avoid ending up in a time crunch.
 
 ## Overall experience
 
