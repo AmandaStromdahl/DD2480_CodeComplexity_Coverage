@@ -31,12 +31,12 @@ The eight functions are presented in the table below. Every function has a CCN o
 | --------------------------------------------- | ---------------------------------------------------- | ----------- | ----------------------- | ----------------------- | ------------ |
 | dj_oracle(case, num_qubits)                   | quantum/deutsch_jozsa.py                             | 9           | 9                       | 9                       | 25           |
 | strassen(matrix1, matrix2)                    | divide_and_conquer/strassen_matrix_multiplication.py | 12          | 10                      | 10                      | 39           |
-| interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | -                       | 30           |
-| cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | -                       | 35           |
-| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | -                       | NLOC5        |
+| interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | 6                       | 30           |
+| cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | 10                      | 35           |
+| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
 | simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 15                | CCN6man2                | 79        |
-| Function7                                     | Location7                                            | CCN7        | CCN7man1                | CCN7man2                | NLOC7        |
-| Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
+| hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
+| next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
 
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
@@ -86,6 +86,18 @@ This method is not so long (25 LOC). The complexity comes mainly from the fact t
 
 The simulated annealing method aims to find a global optimum for a given function. It avoid getting stuck in local optima by having a "temperature" variable that controls the degree of randomness that impacts the choices of the algorithm. The function has a high measured complexity by Lizard (CCN = 16) but is not overly long as it consists of 79 lines. Manual counting of the complexity gives a complexity of 15 (14+2-1). The majority of the complexity in this function comes from the fact that the simulated annealing algorithm demands a certain degree of complexity, but also slightly from the coding style.
 
+### Hill Climber ([file](complex_functions/hill_climber.py))
+This function implements the **Hill Climber** heuristic for optimization of search problems. The documentation explains the general idea of the algorithm that it is implementing, that is that we start in a state in the search tree and move to neighboring states that provide maximum or minimum change. The documentation (which is the function docstring) also details the input parameters to the function. There are total 8 input parameters which of 7 are optional (in the table above the only required parameter is listed for brevity). As the algorithm is essentially a simulation there are a bunch of "knobs" that can be tweaked, like the bounds and depth of the simulation. The function makes use of a general interface for search problems implemented as a class called `SearchProblem`. The function takes in an instance of `SearchProblem` which is a representation of the initial state, and returns an instance of `SearchProblem` as a representation of the final state.
+
+Despite being a relatively simple algorithmic idea, the implementation is quite complex with regard to CNN. The reason for the high complexity (16) is the high density of `if` statements, which are needed both for error handling (checking bounds for instance), applying logic specified by the optional parameters (plotting the results for instance) and the main logic of checking values of states. The reason for identical `lizard` and manual scores is the fact that there is a single `return` statement of the function, so the difference of modeling cyclomatic complexity does not matter.
+
+### Conway's Game of Life ([file](complex_functions/conways_game_of_life.py))
+The function we are interested in is called `new_generation` and it performs a single iteration of **Conway's Game of Life**, which is an implementation of a **cellular automata**. It is a simulation that is only influenced by its initial value which is run of a grid of cells that can either be **on** or **off**. I each iteration, the state of every cell is updated simultaneously in accordance to a set of rules. 
+
+The documentation is quite sparse, it only covers the overall purpose of the function, that it generates a new generation of *Conway's Game of Life* along with a simple usage example. The single parameter is not documented, but described well by the type-annotation and its name. There is also a recounting of the rules of *Conways's Game of Life* later in the code as a comment.
+
+Once again the complexity is high (19) due to many `if` statements. The main source of cyclomatic complexity is the need for checking the boundaries of the grid, which has to be done for 8 distinct cells for each cell in the grid. The `lizard` tool and out own manual calculations of the CNN are identical as there is only one exit point of the function so the difference of modelling cyclomatic complexity does not matter.
+
 ## Refactoring
 
 ### <a id="dj_oracle"></a>Deutsch Jozsa ([file](refactored_functions/deutsch_jozsa.py))
@@ -104,13 +116,115 @@ Depending on how this type of refactoring is executed, `matrix1` and `matrix2` w
 
 The refactoring was carried out in [this file](refactored_functions/strassen.py) and the cyclomatic complexity was reduced from 12 to 4 according to Lizard.
 
-Plan for refactoring complex code:
+### <a id="cycleSort_refactored"></a>Cycle Sort ([file](refactored_functions/cycle_sort.py))
 
-Estimated impact of refactoring (lower CC, but other drawbacks?).
+The first thing to note in this method is that a lot of code snippets are repeated in the [original version](complex_functions/cycle_sort.py):
+- LOC 15-20 and 33-38: these lines can be moved into a new function called `find_pos()`. The purpose of this method is to find in which position to place the `item` value in the array;
+- LOC 27-30 and 41-44: these lines can also be moved into a new function called `place_item()`. Its purpose is to place the given `item` in the position found by the `find_pos()` function. Note that the while is here to place the `item` after possible duplicates if any.
 
-Carried out refactoring (optional, P+):
+Finally, we notice that the `while` statement line 32 is there to repeat to sequence of finding position for a given `item` (using `find_pos()`) and place it there (using `place_item()`). We can move this cycle into a new function called `do_cycle()` which will execute this procedure.
 
-git diff ...
+With all these changes, and according to `lizard`, we managed to reduce the cyclomatic complexity of `cycle_sort()` from 10 to 3 ! Which is a reduction of 70%. Detailed calculations can be found in [this file](refactored_functions/cycle_sort.py).
+
+One advantage of this refactoring is that, with the call of the new functions, the algorithm should be easier to understand. However, for someone who want to read the code, it would be a bit annoying to jump from function to function to read the whole code.
+
+
+### Conway's Game of Life ([file](refactored_functions/conways_game_of_life.py))
+
+
+The function we are refactoring is `new_generation`. We start of by identify the areas we can improve upon. The outer two `for` loops cannot really be avoided. However, the following code snippet that counts the active neighbours can be improved upon.
+
+```python
+ ...
+if i > 0 and j > 0:
+    neighbour_count += cells[i - 1][j - 1]
+if i > 0:
+    neighbour_count += cells[i - 1][j]
+if i > 0 and j < len(cells[i]) - 1:
+    neighbour_count += cells[i - 1][j + 1]
+if j > 0:
+    neighbour_count += cells[i][j - 1]
+if j < len(cells[i]) - 1:
+    neighbour_count += cells[i][j + 1]
+if i < len(cells) - 1 and j > 0:
+    neighbour_count += cells[i + 1][j - 1]
+if i < len(cells) - 1:
+    neighbour_count += cells[i + 1][j]
+if i < len(cells) - 1 and j < len(cells[i]) - 1:
+    neighbour_count += cells[i + 1][j + 1]
+ ...
+```
+
+The obvious solution is to extract this sequence into a helper function `active_neighbours(cells, i, j)`. This has pretty dramatic improvement of the cyclomatic complexity, the CNN of `new_generation` drops from 19 to 7 and the NLOC drops from 38 to 22. This refactor also have the two-fold benefit of improving the readability of the function. When you think about it the crux of the `new_generation` function is to apply the rules for each cell, the number of active neighbours is merely a dependency of the rules so it makes sense that it should be a separate function.
+
+Although a good start, this refactor is very surface level. We have not actually solved the complexity issue by extracting this logic to a helper function, we just moved it a bit out of sight. Actually we have increased the total CCN to 20 from 19 (`active_neighbors` have a CCN of 13 and `next_generation` have a CCN of 7). The code is way to explicit, we check each of the 8 surrounding cells with an individual `if` statement. To reduce the complexity we want to loop over the different cells instead of checking each one-by-one. We accomplish this by looping over a set of offsets (`dx`, `dy`) in the `x` and `y` direction. The result is:
+
+```python
+def active_neighbours(cells, x, y):
+    neighbour_count = 0
+
+    # loop over offsets
+    for (dx, dy) in [
+        (-1, -1),
+        (-1, 0),
+        (-1, 1),
+        (0, -1),
+        (0, 1),
+        (1, -1),
+        (1, 0),
+        (1, -1),
+    ]:
+        if x + dx < 0 or x + dx > len(cells[x]) - 1:
+            continue
+        if y + dy < 0 or y + dy > len(cells) - 1:
+            continue
+        neighbour_count += cells[y + dy][x + dx]
+    return neighbour_count
+```
+> Note: variables `i` and `j` have been renamed to `y` and `x`.
+
+This change brings the down the CCN of `active_neighbours` from 13 to 6, which is a good improvement, and the solution is much more elegant.
+
+The last area of improvement is the code that applies the rules, currently it looks like this:
+
+```python
+...
+
+alive = cells[y][x] == 1
+if (
+    (alive and 2 <= neighbour_count <= 3)
+    or not alive
+    and neighbour_count == 3
+):
+    next_generation_row.append(1)
+else:
+    next_generation_row.append(0)
+
+...
+```
+
+A good idea in this scenario is to extract the condition in the `if` statement out to a function with a good name, like `cell_should_be_on(alive, neighbour_count)`. This improves readability at a glance, and will reduce the CCN of the `new_generation` function. The end result will then be,
+
+```python
+def cell_should_be_on(alive, neighbour_count):
+    return (alive and 2 <= neighbour_count <= 3) or not alive and neighbour_count == 3
+    
+
+def new_generation(cells):
+
+...
+
+alive = cells[y][x] == 1
+if cell_should_be_on(alive, neighbour_count):
+    next_generation_row.append(1)
+else:
+    next_generation_row.append(0)
+...
+```
+
+This change brings down the CCN of `new_generation` to 4, approximately a 79% decrease from the original CCN of 19. Although the total CCN of all functions is 14 (6 + 4 + 4) we have managed to refactor this function into very digestible chunks. From a readability perspective it is also very improved, as you can easily spot the main steps at a glance. Although someone who reads this function would have to "jump around" a bit to understand every detail, but you have the opportunity to unravel the necessary details on demand instead of trying to understand everything at once.
+
+
 
 ### <a id="simulated_annealing"></a>Simulated Annealing ([file](refactored_functions/simulated_annealing.py))
 
