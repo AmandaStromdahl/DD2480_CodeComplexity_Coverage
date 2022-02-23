@@ -3,7 +3,7 @@ import math
 import random
 from typing import Any
 
-from .hill_climbing import SearchProblem
+from SearchProblem import SearchProblem
 
 
 def simulated_annealing(
