@@ -1,4 +1,4 @@
-# https://en.wikipedia.org/wiki/Hill_climbing
+# This algorithm is taken from the GitHub repository: https://github.com/TheAlgorithms/Python
 import math
 
 

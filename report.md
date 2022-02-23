@@ -35,7 +35,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | 10                      | 35           |
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
 | Function6                                     | Location6                                            | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
-| hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | CCN7man2                | 68           |
+| hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
 | Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
 
 - **Did all methods (tools vs. manual count) get the same result?**
