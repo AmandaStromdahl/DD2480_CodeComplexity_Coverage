@@ -35,8 +35,6 @@ def test_two_lists_or_tuples_True():
     # assert jaccard_similariy(setB, setA, True) == 0
 
 # it tests all the invalid possible inputs
-# the commented assert are the ones where the right
-# behavior is not properly described in the doc
 def test_invalid_arguments():
     assert jaccard_similariy({}, {}) == None
     assert jaccard_similariy({}, {0}) == None
@@ -50,27 +48,15 @@ def test_invalid_arguments():
     assert jaccard_similariy({}, {}, True) == None
     assert jaccard_similariy({}, {0}, True) == None
     assert jaccard_similariy({0}, {}, True) == None
-    # assert jaccard_similariy((), ()) == ?
-    # assert jaccard_similariy((), (0)) == ?
-    # assert jaccard_similariy((0), ()) == ?
     assert jaccard_similariy(0, 0) == None
     assert jaccard_similariy((0), 0) == None
     assert jaccard_similariy(0, (0)) == None
     assert jaccard_similariy(0, 0, True) == None
     assert jaccard_similariy((0), 0, True) == None
     assert jaccard_similariy(0, (0), True) == None
-    # assert jaccard_similariy((), (), True) == ?
-    # assert jaccard_similariy((), (0), True) == ?
-    # assert jaccard_similariy((0), (), True) == ?
-    # assert jaccard_similariy([], []) == ?
-    # assert jaccard_similariy([], [0]) == ?
-    # assert jaccard_similariy([0], []) == ?
     assert jaccard_similariy(0, 0) == None
     assert jaccard_similariy([0], 0) == None
     assert jaccard_similariy(0, [0]) == None
     assert jaccard_similariy(0, 0, True) == None
     assert jaccard_similariy([0], 0, True) == None
     assert jaccard_similariy(0, [0], True) == None
-    # assert jaccard_similariy([], [], True) == ?
-    # assert jaccard_similariy([], [0], True) == ?
-    # assert jaccard_similariy([0], [], True) == ?
