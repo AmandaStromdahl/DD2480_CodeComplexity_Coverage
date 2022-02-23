@@ -82,6 +82,10 @@ This method is used to make a spiral print of a given squared matrix. The docume
 The `lizard` tool gives this method a complexity (CCN) of 12. However, with the manual analysis, we obtained a complexity of 10. We've exactly the same situation as for the [interpolation search](#interpolationSearch), i.e. `lizard` does not make the difference between _normal_ statements and 'return' statements. Hence the difference of 2 levels of complexity comes from the 2 `return` statements (we do not count the final `return`) that `lizard` considers as _normal_ statements.<br>
 This method is not so long (25 LOC). The complexity comes mainly from the fact that we've to iterate a bunch of time on a specific `Iterable`.
 
+### Simulated Annealing ([file](complex_functions/simulated_annealing.py))
+
+Describe the method like above.
+
 ## Refactoring
 
 ### <a id="dj_oracle"></a>Deutsch Jozsa ([file](refactored_functions/deutsch_jozsa.py))
