@@ -36,7 +36,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
 | Function6                                     | Location6                                            | CCN6        | CCN6man1                | CCN6man2                | NLOC6        |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
-| Function8                                     | Location8                                            | CCN8        | CCN8man1                | CCN8man2                | NLOC8        |
+| next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
 
 - **Did all methods (tools vs. manual count) get the same result?**
 - **Are the results clear?**
@@ -86,6 +86,15 @@ This method is not so long (25 LOC). The complexity comes mainly from the fact t
 This function implements the **Hill Climber** heuristic for optimization of search problems. The documentation explains the general idea of the algorithm that it is implementing, that is that we start in a state in the search tree and move to neighboring states that provide maximum or minimum change. The documentation (which is the function docstring) also details the input parameters to the function. There are total 8 input parameters which of 7 are optional (in the table above the only required parameter is listed for brevity). As the algorithm is essentially a simulation there are a bunch of "knobs" that can be tweaked, like the bounds and depth of the simulation. The function makes use of a general interface for search problems implemented as a class called `SearchProblem`. The function takes in an instance of `SearchProblem` which is a representation of the initial state, and returns an instance of `SearchProblem` as a representation of the final state.
 
 Despite being a relatively simple algorithmic idea, the implementation is quite complex with regard to CNN. The reason for the high complexity (16) is the high density of `if` statements, which are needed both for error handling (checking bounds for instance), applying logic specified by the optional parameters (plotting the results for instance) and the main logic of checking values of states. The reason for identical `lizard` and manual scores is the fact that there is a single `return` statement of the function, so the difference of modeling cyclomatic complexity does not matter.
+
+### Conway's Game of Life ([file](complex_functions/conways_game_of_life.py))
+The function we are interested in is called `new_generation` and it performs a single iteration of **Conway's Game of Life**, which is an implementation of a **cellular automata**. It is a simulation that is only influenced by its initial value which is run of a grid of cells that can either be **on** or **off**. I each iteration, the state of every cell is updated simultaneously in accordance to a set of rules. 
+
+The documentation is quite sparse, it only covers the overall purpose of the function, that it generates a new generation of *Conway's Game of Life* along with a simple usage example. The single parameter is not documented, but described well by the type-annotation and its name. There is also a recounting of the rules of *Conways's Game of Life* later in the code as a comment.
+
+Once again the complexity is high (19) due to many `if` statements. The main source of cyclomatic complexity is the need for checking the boundaries of the grid, which has to be done for 8 distinct cells for each cell in the grid. The `lizard` tool and out own manual calculations of the CNN are identical as there is only one exit point of the function so the difference of modelling cyclomatic complexity does not matter.
+
+
 
 ## Refactoring
 
