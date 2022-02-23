@@ -28,10 +28,10 @@ There is no build script.
 See above.
 
 **(e).** How well do examples and tests run on your system(s)?\
-I've tried several algorithms and they seem to be working without issue. -Insert information about tests here-
+I've tried several algorithms and they seem to be working without issue. The project uses pytest for its testkit. This was not well described in the original repository but quite apparent given some of the top-level files in the repository. For a newcomer who has never used pytest before this could prove to be somewhat of a hinderance.
 
 2. Do you plan to continue or choose another project?
-No.
+We are planning to continue with this project as it is suitable for complexity analysis and refactoring.
 
 ## Complexity
 
