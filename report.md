@@ -126,6 +126,104 @@ With all these changes, and according to `lizard`, we managed to reduce the cycl
 
 One advantage of this refactoring is that, with the call of the new functions, the algorithm should be easier to understand. However, for someone who want to read the code, it would be a bit annoying to jump from function to function to read the whole code.
 
+
+### Conway's Game of Life ([file](refactored_functions/conways_game_of_life.py))
+
+
+The function we are refactoring is `new_generation`. We start of by identify the areas we can improve upon. The outer two `for` loops cannot really be avoided. However, the following code snippet that counts the active neighbours can be improved upon.
+
+```python
+ ...
+if i > 0 and j > 0:
+    neighbour_count += cells[i - 1][j - 1]
+if i > 0:
+    neighbour_count += cells[i - 1][j]
+if i > 0 and j < len(cells[i]) - 1:
+    neighbour_count += cells[i - 1][j + 1]
+if j > 0:
+    neighbour_count += cells[i][j - 1]
+if j < len(cells[i]) - 1:
+    neighbour_count += cells[i][j + 1]
+if i < len(cells) - 1 and j > 0:
+    neighbour_count += cells[i + 1][j - 1]
+if i < len(cells) - 1:
+    neighbour_count += cells[i + 1][j]
+if i < len(cells) - 1 and j < len(cells[i]) - 1:
+    neighbour_count += cells[i + 1][j + 1]
+ ...
+```
+
+The obvious solution is to extract this sequence into a helper function `active_neighbours(cells, i, j)`. This has pretty dramatic improvement of the cyclomatic complexity, the CNN of `new_generatio` drops from 19 to 7 and the NLOC drops from 38 to 22. This refactor also have the two-fold benefit of improving the readability of the function. When you think about it the crux of the `new_generation` function is to apply the rules for each cell, the number of active neighbours is merely a dependency of the rules so it makes sense that it should be a separate function.
+
+Although a good start, this refactor is very surface level. We have not actually solved the complexity issue by extracting this logic to a helper function, we just moved it a bit out of sight. Actually we have increased the total CCN to 20 from 19 (`active_neighbors` have a CCN of 13 and `next_generation` have a CCN of 7). The code is way to explicit, we check each of the 8 surrounding cells with an individual `if` statement. To reduce the complexity we want to loop over the different cells instead of checking each one-by-one. We accomplish this by looping over a set of offsets (`dx`, `dy`) in the `x` and `y` direction. The result is:
+
+```python
+def active_neighbours(cells, x, y):
+    neighbour_count = 0
+
+    # loop over offsets
+    for (dx, dy) in [
+        (-1, -1),
+        (-1, 0),
+        (-1, 1),
+        (0, -1),
+        (0, 1),
+        (1, -1),
+        (1, 0),
+        (1, -1),
+    ]:
+        if x + dx < 0 or x + dx > len(cells[x]) - 1:
+            continue
+        if y + dy < 0 or y + dy > len(cells) - 1:
+            continue
+        neighbour_count += cells[y + dy][x + dx]
+    return neighbour_count
+```
+> Note: variables `i` and `j` have been renamed to `y` and `x`.
+
+This change brings the down the CCN of `active_neighbours` from 13 to 6, which is a good improvement, and the solution is much more elegant.
+
+The last area of improvement is the code that applies the rules, currently it looks like this:
+
+```python
+...
+
+alive = cells[y][x] == 1
+if (
+    (alive and 2 <= neighbour_count <= 3)
+    or not alive
+    and neighbour_count == 3
+):
+    next_generation_row.append(1)
+else:
+    next_generation_row.append(0)
+
+...
+```
+
+A good idea in this scenario is to extract the condition in the `if` statement out to a function with a good name, like `cell_should_be_on(alive, neighbour_count)`. This improves readability at a glance, and will reduce the CCN of the `new_generation` function. The end result will then be,
+
+```python
+def cell_should_be_on(alive, neighbour_count):
+    return (alive and 2 <= neighbour_count <= 3) or not alive and neighbour_count == 3
+    
+
+def new_generation(cells):
+
+...
+
+alive = cells[y][x] == 1
+if cell_should_be_on(alive, neighbour_count):
+    next_generation_row.append(1)
+else:
+    next_generation_row.append(0)
+...
+```
+
+This change brings down the CCN of `new_generation` to 4, approximately a 79% decrease from the original CCN of 19. Although the total CCN of all functions is 14 (6 + 4 + 4) we have managed to refactor this function into very digestible chunks. From a readability perspective it is also very improved, as you can easily spot the main steps at a glance. Although someone who reads this function would have to "jump around" a bit to understand every detail, as you can unravel the necessary details on demand instead of trying to understand everything at once.
+
+
+
 ## Coverage
 
 ### Tools
