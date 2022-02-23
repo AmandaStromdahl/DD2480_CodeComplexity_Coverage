@@ -22,6 +22,8 @@ GLIDER = [
 # Define blinker example
 BLINKER = [[0, 1, 0], [0, 1, 0], [0, 1, 0]]
 
+# NOTE: CNN labels: decision <number> , exit <number>
+
 
 def new_generation(cells: list[list[int]]) -> list[list[int]]:
     """
@@ -30,25 +32,36 @@ def new_generation(cells: list[list[int]]) -> list[list[int]]:
     [[0, 0, 0], [1, 1, 1], [0, 0, 0]]
     """
     next_generation = []
+    # decision 1
     for i in range(len(cells)):
         next_generation_row = []
+        # decision 2
         for j in range(len(cells[i])):
             # Get the number of live neighbours
             neighbour_count = 0
+
+            # decision 3,4
             if i > 0 and j > 0:
                 neighbour_count += cells[i - 1][j - 1]
+            # decision 5
             if i > 0:
                 neighbour_count += cells[i - 1][j]
+            # decision 6, 7
             if i > 0 and j < len(cells[i]) - 1:
                 neighbour_count += cells[i - 1][j + 1]
+            # decision 8
             if j > 0:
                 neighbour_count += cells[i][j - 1]
+            # decision 9
             if j < len(cells[i]) - 1:
                 neighbour_count += cells[i][j + 1]
+            # decision 10, 11
             if i < len(cells) - 1 and j > 0:
                 neighbour_count += cells[i + 1][j - 1]
+            # decision 12
             if i < len(cells) - 1:
                 neighbour_count += cells[i + 1][j]
+            # decision 13, 14
             if i < len(cells) - 1 and j < len(cells[i]) - 1:
                 neighbour_count += cells[i + 1][j + 1]
 
@@ -58,6 +71,7 @@ def new_generation(cells: list[list[int]]) -> list[list[int]]:
             # 3. All other live cells die in the next generation.
             #    Similarly, all other dead cells stay dead.
             alive = cells[i][j] == 1
+            # decision 15,16,17,18
             if (
                 (alive and 2 <= neighbour_count <= 3)
                 or not alive
@@ -68,7 +82,11 @@ def new_generation(cells: list[list[int]]) -> list[list[int]]:
                 next_generation_row.append(0)
 
         next_generation.append(next_generation_row)
+    # exit 1
     return next_generation
+
+
+# NOTE: CNN = 18 - 1 + 2 = 19
 
 
 def generate_images(cells: list[list[int]], frames: int) -> list[Image.Image]:
