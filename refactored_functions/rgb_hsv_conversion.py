@@ -14,7 +14,7 @@ https://en.wikipedia.org/wiki/HSL_and_HSV).
 """
 
 
-def hsv_to_rgb(hue: float, saturation: float, value: float) -> list[int]:
+def hsv_to_rgb(hue: float, saturation: float, value: float) -> list:
     """
     Conversion from the HSV-representation to the RGB-representation.
     Expected RGB-values taken from
@@ -56,6 +56,12 @@ def hsv_to_rgb(hue: float, saturation: float, value: float) -> list[int]:
     match_value = value - chroma
 
     # Colour types.
+    
+    # --------------------------------------------------------------------
+    # REFACTORED: Here the three main calculations are made instead of being part a larger 
+    # if-statement. The values have also been placed into an indexable list which can 
+    # be accessed by the hue_section.
+    # --------------------------------------------------------------------
     ct1 = round(255 * (chroma + match_value))
     ct2 = round(255 * (second_largest_component + match_value))
     ct3 = round(255 * (match_value))
@@ -71,11 +77,12 @@ def hsv_to_rgb(hue: float, saturation: float, value: float) -> list[int]:
 
     if hue_section <= 5:
         return hue_section_list[round(hue_section)]
+    # --------------------------------------------------------------------
 
     return comb_six
 
 
-def rgb_to_hsv(red: int, green: int, blue: int) -> list[float]:
+def rgb_to_hsv(red: int, green: int, blue: int) -> list:
     """
     Conversion from the RGB-representation to the HSV-representation.
     The tested values are the reverse values from the hsv_to_rgb-doctests.
@@ -133,7 +140,7 @@ def rgb_to_hsv(red: int, green: int, blue: int) -> list[float]:
     return [hue, saturation, value]
 
 
-def approximately_equal_hsv(hsv_1: list[float], hsv_2: list[float]) -> bool:
+def approximately_equal_hsv(hsv_1: list, hsv_2: list) -> bool:
     """
     Utility-function to check that two hsv-colors are approximately equal
 
