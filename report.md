@@ -306,6 +306,5 @@ The self-assessment was unanimous. We also agreed that a way to improve is to ma
 
 ## Overall experience
 
-What are your main take-aways from this project? What did you learn?
+This assignment has introduced us to the concepts of using complexity measures to improve the quality of pieces of code. In general we have found CNN to be a relatively good metric, but aiming to reduce the CNN needlessly can lead to worse code as everything is split into too many bits. So there is a trade-off between low complexity and a ergonomic experience consuming the code. It was interesting to develop out own tool for coverage, as it has been one of the first times where we have built our own tools to use in the development process. We also have all come to the conclusion that we should have started earlier.
 
-Is there something special you want to mention here?
