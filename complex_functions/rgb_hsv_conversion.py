@@ -14,7 +14,7 @@ https://en.wikipedia.org/wiki/HSL_and_HSV).
 """
 
 
-def hsv_to_rgb(hue: float, saturation: float, value: float) -> list[int]:
+def hsv_to_rgb(hue: float, saturation: float, value: float) -> list:
     """
     Conversion from the HSV-representation to the RGB-representation.
     Expected RGB-values taken from
@@ -83,7 +83,7 @@ def hsv_to_rgb(hue: float, saturation: float, value: float) -> list[int]:
     return [red, green, blue]
 
 
-def rgb_to_hsv(red: int, green: int, blue: int) -> list[float]:
+def rgb_to_hsv(red: int, green: int, blue: int) -> list:
     """
     Conversion from the RGB-representation to the HSV-representation.
     The tested values are the reverse values from the hsv_to_rgb-doctests.
@@ -141,7 +141,7 @@ def rgb_to_hsv(red: int, green: int, blue: int) -> list[float]:
     return [hue, saturation, value]
 
 
-def approximately_equal_hsv(hsv_1: list[float], hsv_2: list[float]) -> bool:
+def approximately_equal_hsv(hsv_1: list, hsv_2: list) -> bool:
     """
     Utility-function to check that two hsv-colors are approximately equal
 
