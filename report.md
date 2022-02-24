@@ -45,7 +45,7 @@ The eight functions are presented in the table below. Every function has a CCN o
 | strassen(matrix1, matrix2)                    | divide_and_conquer/strassen_matrix_multiplication.py | 12          | 10                      | 10                      | 39           |
 | interpolation_search(sorted_collection, item) | searches/interpolation_search.py                     | 10          | 6                       | 6                       | 30           |
 | cycle_sort(list)                              | sorts/cycle_sort.py                                  | 10          | 10                      | 10                      | 35           |
-| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | NLOC5        |
+| spiral_print(matrix)                          | matrix/spiral_print.py                               | 12          | 10                      | 10                      | 26        |
 | simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 16                      | 16                      | 79           |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
 | next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
@@ -251,32 +251,45 @@ The refactored version of the code can be found in [this file](refactored_functi
 
 ## Coverage
 
-### Tools
+### <a id="tools"></a>Tools
 
 We used Coverage.py, which was the recommended tool for measuring coverage in Python. The documentation provided a sufficiently detailed description of how to install it with `pip` and which commands to use. Overall it worked relatively well and was easy to use with PyTest.
 
 Nevertheless, we did get some strange results for one of the examined functions. Even though there were no tests for that function, Coverage.py deemed the coverage to be non-zero. When taking a closer look at the tool's analysis, it turned out that Coverage.py had included function headers and import statements in the coverage. The only parts that weren't covered were the code contents of the functions.
 
-### Your own coverage tool
+### Our own coverage data structure
 
-Show a patch (or link to a branch) that shows the instrumented code to
-gather coverage measurements.
+To build our own coverage tool, we started by creating a new data structure called `CoverageData` that is implemented in [this file](coverage_analysis/data_structure/coverage_data_structure.py). The structure holds two main data:
+- The access sequence of branches during the execution of a specific function as an array of branches IDs
+- The data per branch, i.e the total number of accesses per branch as a python dictionary
 
-The patch is probably too long to be copied here, so please add
-the git command that is used to obtain the patch instead:
+The structure offers two main methods:
+- `log_branch()`: given the type and the ID of a branch, the function logs this branch accordingly in the data structures explained above.
+- `print_results()`: this function print a nice presentation of the results in the terminal, starting with the access sequence and then the total accesses per branch.
 
-git diff ...
+The structure also defines _getter_ for the two main data, that are used to test the data structure and in the coverage tool class. Note that the data structure has been tested in [this file](coverage_analysis/data_structure/coverage_data_structure_test.py).
 
-What kinds of constructs does your tool support, and how accurate is
-its output?
+### Our own coverage tool
+
+Having implemented this new data structure, we defined our coverage tool in a new class called `Coverage_tool` that can be found [here](coverage_analysis/data_stsructure/../data_structure/coverage_tool.py).
+
+#### Functionality
+
+To create a instance of the tool, firstly, we need to provide an array of adapted tests, i.e the tested function have to be modified to used our data structure previously described: at the beginning of each branch, we call the `log_branch()` method defined on the data structure given as parameter in the modified tested function. For each branch, we define its type and and ID, and we set the method arguments accordingly. You can find examples [here](coverage_analysis/functions_analysed/). The second argument is the number of branches in the tested function.<br>
+Please note that the one instance of the coverage tool is used to test only one function ! To test multiple files/functions, you need to create a new instance of the tool per tested function.<br>
+The tool provides two methods:
+- `run()`: this method runs all the given tests. For each test, it creates a new coverage data structure, executes the adapted tested function given it the data structure, and finally retrieve and store the results in an array.
+- `print_results()`: this method will print all the results for each test (i.e. the total number of accesses per branch) and also the mean number of accesses per branch. Finally it also computes the branch coverage percentage.
+
+#### how to use
+
+As explained above, to test a function, we need to modify it. Firstly, one parameter has to be added, that is the coverage data structure instance of `CoverageData`. Then, at the beginning of each possible branch, we need to call the `log_branch()` method on the data structure instance and give it the branch type and an unique ID. Note that all the `if` statements have to have their `else` statement, so we need to create it if missing. Then we create a new test file where we will actually write our tests. All tests takes a coverage data structure as argument, the code of the test keeps straightforward. The only difference with a usual test is that the coverage data structure if given as parameter when calling the tested method. Finally, we define a main method that holds all the tests in an array, create a instance of the coverage tool `Coverage_tool` giving the tests and the number of branches in the tested function. We then run the tests (`coverageToolInstance.run()`) and print the results (`coverageToolInstance.print_results()`).<br>
+Complete examples can be found [here](coverage_analysis/coverage_tests/).
 
 ### Evaluation
 
-1. How detailed is your coverage measurement?
-
-2. What are the limitations of your own tool?
-
-3. Are the results of your tool consistent with existing coverage tools?
+As described above, our own coverage tool keeps track of the branches access sequence and the total number of accesses per branches. The biggest drawback of our implementation if that in order to test any function, we need to modify it in order to log all branches, which is feasible for few functions, but for larger folders with a lot of files and functions, it is really not convenient to use our tool.<br>
+After few execution of our tool, we try to compare the results with the ones given by the tool `coverage.py`. The main difference in terms of branch coverage percentage comes from the fact that our tool only analyzes the specific function we chose while `coverage.py` analyzes the whole files, see [this section](#tools). However, after manual inspection on different executions and specifically on the specific tested method, we observe that our tool is covering the same branches than the ones given by `coverage.py`.
 
 ## Coverage improvement
 
