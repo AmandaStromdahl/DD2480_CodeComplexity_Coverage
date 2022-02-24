@@ -49,15 +49,8 @@ The eight functions are presented in the table below. Every function has a CCN o
 | simulated_annealing(search)                   | searches/simulated_annealing.py                      | 16          | 16                      | 16                      | 79           |
 | hill_climber(search_prob)                     | searches/hill_climber.py                             | 16          | 16                      | 16                      | 68           |
 | next_generation(cells)                        | cellular_automata                                    | 19          | 19                      | 19                      | 38           |
-| hsv_to_rgb(conversions)                       | conversion/rgb_hsv_conversion.py                     | 17          | 14                      | -                       | 62           |
+| hsv_to_rgb(conversions)                       | conversion/rgb_hsv_conversion.py                     | 17          | 14                      | 14                       | 62           |
 
-- **Did all methods (tools vs. manual count) get the same result?**
-- **Are the results clear?**
-
-1. **Are the functions just complex, or also long?**
-2. **What is the purpose of the functions?**
-3. **Are exceptions taken into account in the given measurements?**
-4. **Is the documentation clear w.r.t. all the possible outcomes?**
 
 ### <a id="dj_oracle"></a>Deutsch Jozsa ([file](complex_functions/deutsch_jozsa.py))
 
@@ -296,6 +289,14 @@ After few execution of our tool, we try to compare the results with the ones giv
 None of the selected functions had any tests originally, which means their old coverage was 0%, (there were very few tests overall). This means every new test that we wrote increased the coverage without overlapping with any old test from the original project.
 
 Our tests can be found in [this folder](complex_functions/tests).
+
+| Function | Initial coverage % | New coverage % |
+|----------|--------------------|----------------|
+| [cycle_sort()](coverage_analysis/functions_analysed/cycle_sort_coverage.py)     | 0               | 100          |
+| [dj_oracle()](coverage_analysis/functions_analysed/deutsch_jozsa_coverage.py)         | 0                   |      92.86          |
+| [insertion_sort()](coverage_analysis/functions_analysed/insertion_sort_coverage.py)         |  0                  |  100              |
+| [spiralPrint()](coverage_analysis/functions_analysed/spiral_print_coverage.py)         | 0                   | 84.21               |
+| [strassen()](coverage_analysis/functions_analysed/strassen_coverage.py)         | 0                   | 100               |
 
 ## Self-assessment: Way of working
 
